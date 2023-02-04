@@ -566,46 +566,10 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/2.jpg');
                 </a>
                 
                 
-                <a href="/tags/导航/" title="导航: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="导航" style="background-color: #D5F5E3;">导航
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/aop/" title="aop: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            data-tagname="aop" style="background-color: #E8F8F5;">aop
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/注解/" title="注解: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="注解" style="background-color: #FEF9E7;">注解
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/lz4/" title="lz4: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="lz4" style="background-color: #F8F9F9;">lz4
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/tags/ReentrantLock/" title="ReentrantLock: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="ReentrantLock" style="background-color: #82E0AA;">ReentrantLock
+                            data-tagname="ReentrantLock" style="background-color: #D5F5E3;">ReentrantLock
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -614,7 +578,43 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/2.jpg');
                 <a href="/tags/AQS/" title="AQS: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="AQS" style="background-color: #D7BDE2;">AQS
+                            data-tagname="AQS" style="background-color: #E8F8F5;">AQS
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/lz4/" title="lz4: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="lz4" style="background-color: #FEF9E7;">lz4
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/导航/" title="导航: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="导航" style="background-color: #F8F9F9;">导航
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/aop/" title="aop: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            data-tagname="aop" style="background-color: #82E0AA;">aop
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/注解/" title="注解: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="注解" style="background-color: #D7BDE2;">注解
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -774,8 +774,10 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/2.jpg');
     $(document).ready(function () {
 
         var int = setInterval(fixCount, 50);
-        var pvcountOffset = 80000;
-        var uvcountOffset = 20000;
+        // var pvcountOffset = 80000;
+        // var uvcountOffset = 20000;
+        var pvcountOffset = 0;
+        var uvcountOffset = 0;
 
         function fixCount() {
             if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
