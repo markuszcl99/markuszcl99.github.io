@@ -5,9 +5,9 @@
   <subtitle>MarkusZhang</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://www.markuszhang.com/"/>
+  <link href="https://101.43.146.21/"/>
   <updated>2022-05-14T15:01:54.000Z</updated>
-  <id>https://www.markuszhang.com/</id>
+  <id>https://101.43.146.21/</id>
   
   <author>
     <name>张成龙</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>VMware 安装 CentOS 8.1 完整教程 </title>
-    <link href="https://www.markuszhang.com/vmware-an-zhuang-centos-8-1-wan-zheng-jiao-cheng.html"/>
-    <id>https://www.markuszhang.com/vmware-an-zhuang-centos-8-1-wan-zheng-jiao-cheng.html</id>
+    <link href="https://101.43.146.21/vmware-an-zhuang-centos-8-1-wan-zheng-jiao-cheng.html"/>
+    <id>https://101.43.146.21/vmware-an-zhuang-centos-8-1-wan-zheng-jiao-cheng.html</id>
     <published>2020-03-05T10:29:16.000Z</published>
     <updated>2022-05-14T15:01:54.000Z</updated>
     
@@ -36,19 +36,19 @@
     
     </summary>
     
-      <category term="Linux" scheme="https://www.markuszhang.com/categories/Linux/"/>
+      <category term="Linux" scheme="https://101.43.146.21/categories/Linux/"/>
     
     
-      <category term="VMware" scheme="https://www.markuszhang.com/tags/VMware/"/>
+      <category term="VMware" scheme="https://101.43.146.21/tags/VMware/"/>
     
-      <category term="CentOS" scheme="https://www.markuszhang.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="https://101.43.146.21/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>Github + Hexo 搭建个人博客超详细教程</title>
-    <link href="https://www.markuszhang.com/1.html"/>
-    <id>https://www.markuszhang.com/1.html</id>
+    <link href="https://101.43.146.21/1.html"/>
+    <id>https://101.43.146.21/1.html</id>
     <published>2020-02-18T13:17:35.000Z</published>
     <updated>2022-05-14T15:01:54.000Z</updated>
     
@@ -65,14 +65,14 @@
     
     </summary>
     
-      <category term="Blog" scheme="https://www.markuszhang.com/categories/Blog/"/>
+      <category term="Blog" scheme="https://101.43.146.21/categories/Blog/"/>
     
     
-      <category term="Github" scheme="https://www.markuszhang.com/tags/Github/"/>
+      <category term="Github" scheme="https://101.43.146.21/tags/Github/"/>
     
-      <category term="Hexo" scheme="https://www.markuszhang.com/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://101.43.146.21/tags/Hexo/"/>
     
-      <category term="博客搭建" scheme="https://www.markuszhang.com/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+      <category term="博客搭建" scheme="https://101.43.146.21/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
     
   </entry>
   
