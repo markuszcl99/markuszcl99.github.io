@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://101.43.146.21/"/>
-  <updated>2022-05-14T15:01:54.000Z</updated>
+  <updated>2023-02-04T08:34:14.803Z</updated>
   <id>https://101.43.146.21/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>VMware 安装 CentOS 8.1 完整教程 </title>
-    <link href="https://101.43.146.21/vmware-an-zhuang-centos-8-1-wan-zheng-jiao-cheng.html"/>
-    <id>https://101.43.146.21/vmware-an-zhuang-centos-8-1-wan-zheng-jiao-cheng.html</id>
-    <published>2020-03-05T10:29:16.000Z</published>
-    <updated>2022-05-14T15:01:54.000Z</updated>
+    <title>lz4压缩算法</title>
+    <link href="https://101.43.146.21/lz4-ya-suo-suan-fa.html"/>
+    <id>https://101.43.146.21/lz4-ya-suo-suan-fa.html</id>
+    <published>2023-02-04T08:25:44.000Z</published>
+    <updated>2023-02-04T08:34:14.803Z</updated>
     
     <summary type="html">
     
@@ -29,50 +29,12 @@
       
         
         
-          &lt;p&gt;我使用的&lt;font color=&quot;red&quot; size=&quot;3&quot;&gt;VMware&lt;/font&gt;版本：&lt;font color=&quot;red&quot; size=&quot;3&quot;&gt;VMware 15 Pro&lt;/font&gt;&lt;/p&gt;
-&lt;p&gt;镜像：&lt;font color=&quot;red&quot;
+          &lt;h2 id=&quot;一、简介&quot;&gt;&lt;a href=&quot;#一、简介&quot; class=&quot;headerlink&quot; title=&quot;一、简介&quot;&gt;&lt;/a&gt;一、简介&lt;/h2&gt;&lt;p&gt;Lz4压缩算法是由Yann
         
       
     
     </summary>
     
-      <category term="Linux" scheme="https://101.43.146.21/categories/Linux/"/>
-    
-    
-      <category term="VMware" scheme="https://101.43.146.21/tags/VMware/"/>
-    
-      <category term="CentOS" scheme="https://101.43.146.21/tags/CentOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Github + Hexo 搭建个人博客超详细教程</title>
-    <link href="https://101.43.146.21/1.html"/>
-    <id>https://101.43.146.21/1.html</id>
-    <published>2020-02-18T13:17:35.000Z</published>
-    <updated>2022-05-14T15:01:54.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;https://muyiio-1300292673.cos.ap-chongqing.myqcloud.com/%E5%8D%9A%E5%AE%A2/_posts/1/01.png&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;&lt;font color=&quot;magenta&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Blog" scheme="https://101.43.146.21/categories/Blog/"/>
-    
-    
-      <category term="Github" scheme="https://101.43.146.21/tags/Github/"/>
-    
-      <category term="Hexo" scheme="https://101.43.146.21/tags/Hexo/"/>
-    
-      <category term="博客搭建" scheme="https://101.43.146.21/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
     
   </entry>
   
