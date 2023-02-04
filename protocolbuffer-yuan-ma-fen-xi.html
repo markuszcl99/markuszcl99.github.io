@@ -1,0 +1,2406 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="ProtocolBuffer源码分析, 喜欢折腾">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
+    <meta name="description" content="ProtocolBuffer学习
+原文链接：
+
+目录
+
+在学习的过程当中，参考了很多高质量的博客，在此进行感谢，如果在内容中引用您的内容不当，请联系我删除，表示抱歉。
+
+一、它是什么？1、简介Protocol Buffer（以下简称Prot">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>ProtocolBuffer源码分析 | MarkusZhang&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/css/iconfont.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4d1d73af45a62734730491a6b6c41da4";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+    })();
+   </script>
+
+
+    <script>(function (i, s, o, g, r, a, m) {
+        i['DaoVoiceObject'] = r;
+        i[r] = i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          };
+        i[r].l = 1 * new Date();
+        a = s.createElement(o);
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        a.charset = 'utf-8';
+        m.parentNode.insertBefore(a, m);
+      })(window, document, 'script', ('https:' === document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/xxx.js", 'daovoice');
+      daovoice('init', {
+        app_id: "xxx",
+      });
+      daovoice('update');
+    </script>
+  
+  
+
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+    <meta name="baidu-site-verification" content>
+
+
+
+
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loaderҳ����ʧ���ý����ķ�ʽ*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo���ֶ��� */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//ʹ�ý����ķ�������loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//ǿ����ʾloading page 1s  
+    };
+    loaded();
+})()
+ </script><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loaderҳ����ʧ���ý����ķ�ʽ*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo���ֶ��� */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//ʹ�ý����ķ�������loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//ǿ����ʾloading page 1s  
+    };
+    loaded();
+})()
+ </script></head>
+
+
+ <div id="loading-container">
+     <p class="loading-text"></p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">MarkusZhang's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">MarkusZhang's Blog</div>
+        <div class="logo-desc">
+            
+            Back-end development engineer | Recommend | Java
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        ProtocolBuffer源码分析
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/protobuf/" target="_blank">
+                            <span class="chip bg-color">protobuf</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/协议/" class="post-category" target="_blank">
+                            协议
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-02-04
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    张成龙
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    27 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="ProtocolBuffer学习"><a href="#ProtocolBuffer学习" class="headerlink" title="ProtocolBuffer学习"></a>ProtocolBuffer学习</h1><blockquote>
+<p>原文链接：</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><img src="https://img-blog.csdnimg.cn/f2863290611d43b28a2f6396537cd52a.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>在学习的过程当中，参考了很多高质量的博客，在此进行感谢，如果在内容中引用您的内容不当，请联系我删除，表示抱歉。</p>
+</blockquote>
+<h2 id="一、它是什么？"><a href="#一、它是什么？" class="headerlink" title="一、它是什么？"></a>一、它是什么？</h2><h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>Protocol Buffer（以下简称Protobuf）是由Google设计的一种高效、轻量级的信息描述格式，它具有语言中立、平台中立、高效、可扩展等特性。Protocol Buffer诞生之初是为了解决索引服务器端的请求、响应新旧协议(高低版本)兼容性问题，正如它的字面意思所示-“协议缓冲区”；后被Google开源出来，逐渐发展成用于传输数据场景。相比于json、xml，Protobuf的编码长度更短、传输效率更高。它非常适合用来做数据存储、RPC数据通信等工作。</p>
+<p>Protobuf目前有两个版本：proto2和proto3，本章按照proto3的版本来进行学习记录的。</p>
+<h3 id="2、作用"><a href="#2、作用" class="headerlink" title="2、作用"></a>2、作用</h3><p>Protobuf起初用来解决谷歌内部服务器端的请求与响应新旧协议兼容性问题，后被谷歌（2008年）开源出来，经过不断优化，现在Protobuf非常适合用来做数据存储、RPC数据通信等工作。</p>
+<p>Protobuf的工作流程很简单，一句话概括就是：通过将<code>结构化数据</code>进行序列化，从而实现<code>数据存储</code>和<code>RPC数据交换</code>，对端拿到数据做反序列化处理加载到内存进行数据使用的功能。</p>
+<h3 id="3、特点"><a href="#3、特点" class="headerlink" title="3、特点"></a>3、特点</h3><blockquote>
+<p>简介里有提到Protobuf的优点，这里将优缺点详细罗列下。</p>
+</blockquote>
+<h4 id="a-优点"><a href="#a-优点" class="headerlink" title="a.优点"></a>a.优点</h4><ol>
+<li>性能方面：<ol>
+<li>体积小：序列化后，数据可缩小约3倍；</li>
+<li>序列化速度快：比XML、json快，从吞吐量角度来讲，Protobuf要比json高5倍，比XML速度就更快了；</li>
+<li>传输速度快：由于序列化后数据体检变小，所以在传输时，同样带宽下，数据包变小，传输速度也相应变少</li>
+</ol>
+</li>
+<li>使用方面：<ol>
+<li>使用方便：本地安装protoc编译器或者在idea上安装protoc插件，即可编译proto文件生成各语言的源码进行使用；</li>
+<li>维护成本低：多个平台只需要维护一套对象协议文件（.proto文件）即可；</li>
+<li>兼容性好，即扩展性好，在不改变旧协议格式内容的前提下，就可以直接对数据结构进行更新；<ol>
+<li>向前兼容性好，老协议可以解析新协议内容，但是解析新的内容时，会丢掉协议中新增部分的数据</li>
+<li>向后兼容性好，新协议可以解析旧协议内容，对于新增字段的内容将会使用默认值</li>
+</ol>
+</li>
+<li>加密型好：HTTP传输内容抓包只能看到字节；</li>
+</ol>
+</li>
+<li>使用范围：<ol>
+<li>跨平台</li>
+<li>跨语言</li>
+</ol>
+</li>
+</ol>
+<h4 id="b-缺点"><a href="#b-缺点" class="headerlink" title="b.缺点"></a>b.缺点</h4><ol>
+<li>功能方面：<ol>
+<li>不适合用于对基于文本的<a href="https://baike.baidu.com/item/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/5964436" target="_blank" rel="noopener">标记语言</a>（如HTML）建模，因为文本不适合描述数据结构</li>
+<li>数据结构不够丰富，不能支持Java的一些数据结构，例如Java中Date等对象</li>
+</ol>
+</li>
+<li>其他方面：<ol>
+<li>解释性较差，以二进制的形式进行存储和传输，可读性非常差，只能通过查看.proto文件才能够了解到数据结构</li>
+</ol>
+</li>
+</ol>
+<h3 id="4、性能对比"><a href="#4、性能对比" class="headerlink" title="4、性能对比"></a>4、性能对比</h3><blockquote>
+<p>使用JMH性能测试工具，对Protobuf、XML、fastjson、jackson等序列化协议进行了测试，以吞吐量为单位，来对比下各序列化协议性能的优劣</p>
+</blockquote>
+<h4 id="a-测试基准环境"><a href="#a-测试基准环境" class="headerlink" title="a.测试基准环境"></a>a.测试基准环境</h4><p><strong>硬件资源</strong></p>
+<pre class="line-numbers language-wiki"><code class="language-wiki">机型: MacBook Pro（2021年）
+芯片: Apple M1 Pro
+内存: 16 GB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><strong>java</strong></p>
+<pre class="line-numbers language-wiki"><code class="language-wiki">java version "1.8.0_211"
+Java(TM) SE Runtime Environment (build 1.8.0_211-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><strong>序列化协议工具版本</strong></p>
+<pre class="line-numbers language-wiki"><code class="language-wiki">protobuf版本:  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>protobuf.java.version</span><span class="token punctuation">></span></span>3.19.4<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>protobuf.java.version</span><span class="token punctuation">></span></span> 
+protobuf框架protostuff版本
+              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>protostuff.core.version</span><span class="token punctuation">></span></span>1.8.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>protostuff.core.version</span><span class="token punctuation">></span></span>
+              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>protostuff.runtime.version</span><span class="token punctuation">></span></span>1.8.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>protostuff.runtime.version</span><span class="token punctuation">></span></span>
+fastjson版本: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>fastjson.version</span><span class="token punctuation">></span></span>1.2.78<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>fastjson.version</span><span class="token punctuation">></span></span>
+jackson版本:    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>jackson.version</span><span class="token punctuation">></span></span>2.12.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>jackson.version</span><span class="token punctuation">></span></span>
+kryo版本:            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>kryo.version</span><span class="token punctuation">></span></span>5.3.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>kryo.version</span><span class="token punctuation">></span></span>
+fst版本:            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>fst.version</span><span class="token punctuation">></span></span>2.57<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>fst.version</span><span class="token punctuation">></span></span>
+xstream版本:  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xstream.version</span><span class="token punctuation">></span></span>1.4.19<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xstream.version</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="b-测试结果"><a href="#b-测试结果" class="headerlink" title="b.测试结果"></a>b.测试结果</h4><blockquote>
+<p>测试源码我放到自己的github上了，有兴趣的话可以将其克隆到本地运行一下，这里就直接上图了。</p>
+<p>GitHub链接：<a href="https://github.com/markuszcl99/BinaryProtocol" target="_blank" rel="noopener">markuszcl99/BinaryProtocol (github.com)</a></p>
+</blockquote>
+<p><strong>序列化结果图</strong></p>
+<blockquote>
+<p>结论如下图所示，比较直观</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/ec36c3863e6c49f994ddd2398201e4bc.png" alt="在这里插入图片描述"></p>
+<p><strong>反序列化结果图</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/f196e9a8e91f4ffcbf20ab34eb9a7e23.png" alt="在这里插入图片描述"></p>
+<p><strong>序列化后字节数对比</strong></p>
+<blockquote>
+<p>结论（空间占比从小到大）：kryo &lt; fst &lt; protobuf &lt; protostuff &lt; fastjson &lt; jackson &lt; jdk &lt; xml</p>
+</blockquote>
+<pre class="line-numbers language-java"><code class="language-java">kryo serialized data size<span class="token operator">:</span><span class="token number">1253</span>
+fst serialized data size<span class="token operator">:</span><span class="token number">1468</span>
+protobuf serialized data size<span class="token operator">:</span><span class="token number">1500</span>
+protostuff serialized data size<span class="token operator">:</span><span class="token number">1513</span>
+protostuff from utils serialized data size<span class="token operator">:</span><span class="token number">1513</span>
+fastjson serialized data size<span class="token operator">:</span><span class="token number">2968</span>
+jackson serialized data size<span class="token operator">:</span><span class="token number">2984</span>
+jdk serialized data size<span class="token operator">:</span><span class="token number">4049</span>
+xml serialized data size<span class="token operator">:</span><span class="token number">4610</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="5、应用场景"><a href="#5、应用场景" class="headerlink" title="5、应用场景"></a>5、应用场景</h3><ol>
+<li>跨平台的RPC数据传输</li>
+<li>对数据量大小有要求</li>
+<li>对性能有要求</li>
+</ol>
+<h2 id="二、如何使用？"><a href="#二、如何使用？" class="headerlink" title="二、如何使用？"></a>二、如何使用？</h2><h3 id="1、使用流程"><a href="#1、使用流程" class="headerlink" title="1、使用流程"></a>1、使用流程</h3><blockquote>
+<p>使用步骤如下图所示：</p>
+</blockquote>
+<p>[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-42ptBg1D-1652596106144)(<a href="http://cdn.markuszhang.com/img/Protobuf%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B%E5%9B%BE.png)]" target="_blank" rel="noopener">http://cdn.markuszhang.com/img/Protobuf%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B%E5%9B%BE.png)]</a></p>
+<h4 id="a-IDEA插件"><a href="#a-IDEA插件" class="headerlink" title="a.IDEA插件"></a>a.IDEA插件</h4><p>对于<code>通过IDEA插件</code>的方式<a href="https://github.com/markuszcl99/BinaryProtocol" target="_blank" rel="noopener">源码</a>中有，就不详细说了。在编写完.proto文件后，直接通过maven插件点击编译即可完成编译。</p>
+<p><img src="https://img-blog.csdnimg.cn/f0dfb77d78424ae7988c4184af9a4c80.png" alt="在这里插入图片描述"></p>
+<h4 id="b-命令行"><a href="#b-命令行" class="headerlink" title="b.命令行"></a>b.命令行</h4><ol>
+<li><p>下载安装包：<a href="https://github.com/protocolbuffers/protobuf/releases" target="_blank" rel="noopener">安装包下载</a>，选择一个你需要的版本进行下载，</p>
+</li>
+<li><p>安装——打开终端，依次执行以下命令</p>
+</li>
+</ol>
+<pre class="line-numbers language-bash"><code class="language-bash">// pre 如果电脑没有安装HOMEBREW工具，就先安装该工具，安装过的就跳过此步
+➜  ~ /usr/bin/ruby -e <span class="token string">"<span class="token variable"><span class="token variable">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="token variable">)</span></span>"</span>
+
+// 安装protobuf环境的命令
+➜  ~ brew <span class="token function">install</span> autoconf automake libtool curl
+// Step1：安装 Protocol Buffer 依赖
+// 注：Protocol Buffer 依赖于  autoconf、automake、libtool、curl
+
+➜  ~ <span class="token function">cd</span> env/path/protobuf-3.19.4
+➜  protobuf-3.19.4
+// Step2：进入 Protocol Buffer安装包 解压后的文件夹（我的解压文件放在桌面）
+
+➜  protobuf-3.19.4 ./autogen.sh
+// Step3：运行 autogen.sh 脚本
+
+➜  protobuf-3.19.4 ./configure
+// Step4：运行 configure.sh 脚本
+
+➜  protobuf-3.19.4 <span class="token function">make</span>
+// Step5：编译未编译的依赖包
+
+➜  protobuf-3.19.4 <span class="token function">make</span> check
+// Step6：检查依赖包是否完整
+
+➜  protobuf-3.19.4 <span class="token function">make</span> <span class="token function">install</span>
+// Step7：开始安装Protocol Buffer<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="3">
+<li>检验Protobuf是否安装成功</li>
+</ol>
+<pre class="line-numbers language-bash"><code class="language-bash">➜  my-blog protoc --version
+libprotoc 3.19.4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="2、实战记录"><a href="#2、实战记录" class="headerlink" title="2、实战记录"></a>2、实战记录</h3><blockquote>
+<ol>
+<li>编写 .proto 文件</li>
+<li>使用IDEA插件编译 or 使用终端命令编译 文件</li>
+<li>编译后的源码加入到工程中</li>
+</ol>
+</blockquote>
+<h4 id="a-编写-proto文件"><a href="#a-编写-proto文件" class="headerlink" title="a.编写.proto文件"></a>a.编写.proto文件</h4><blockquote>
+<p>在编写.proto文件之前，先学习下proto的语法（基于proto3）</p>
+</blockquote>
+<p><strong>protobuf支持的数据类型</strong></p>
+<table>
+<thead>
+<tr>
+<th>.proto Type</th>
+<th>Notes</th>
+<th>Java Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>double</td>
+<td></td>
+<td>double</td>
+</tr>
+<tr>
+<td>float</td>
+<td></td>
+<td>float</td>
+</tr>
+<tr>
+<td>int32</td>
+<td>使用可变长编码方式，但是对于负数的编码效率是非常低的，如果你的数据中有负数，请采用sint32</td>
+<td>int</td>
+</tr>
+<tr>
+<td>int64</td>
+<td>使用可变长编码方式，但是对于负数的编码效率是非常低的，如果你的数据中有负数，请采用sint64</td>
+<td>long</td>
+</tr>
+<tr>
+<td>uint32</td>
+<td>使用可变长编码方式</td>
+<td>int^[1]^</td>
+</tr>
+<tr>
+<td>uint64</td>
+<td>使用可变长编码方式</td>
+<td>long^[1]^</td>
+</tr>
+<tr>
+<td>sint32</td>
+<td>使用可变长编码方式，有符号的int类型值，该类型比普通的int32类型在编码上更高效</td>
+<td>int</td>
+</tr>
+<tr>
+<td>sint64</td>
+<td>使用可变长编码方式，有符号的long类型值，该类型比普通的int64类型在编码上更高效</td>
+<td>long</td>
+</tr>
+<tr>
+<td>fixed32</td>
+<td>使用固定4字节编码方式，如果你的数据值经常比2^28^更大的话，此类型编码会比uint32类型更高效</td>
+<td>int^[1]^</td>
+</tr>
+<tr>
+<td>fixed64</td>
+<td>使用固定8字节编码方式，如果你的数据值经常比2^56^更大的话，此类型编码会比uint64类型更高效</td>
+<td>long^[1]^</td>
+</tr>
+<tr>
+<td>sfixed32</td>
+<td>使用固定4字节编码方式</td>
+<td>int</td>
+</tr>
+<tr>
+<td>sfixed64</td>
+<td>使用固定8字节编码方式</td>
+<td>long</td>
+</tr>
+<tr>
+<td>bool</td>
+<td></td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>string</td>
+<td>字符串类型，它总是包含 UTF-8编码 或者7-bit ASCII文本，并且长度不能超过232</td>
+<td>String</td>
+</tr>
+<tr>
+<td>bytes</td>
+<td>可以包含长度不超过232的任意字节序列</td>
+<td>ByteString</td>
+</tr>
+</tbody></table>
+<p><strong>protobuf语法</strong></p>
+<blockquote>
+<p>protobuf语法可以通过这边文章【<a href="https://juejin.cn/post/6978474549025177608" target="_blank" rel="noopener">戳此</a>】来学习，比较详细了，这里就不赘述了。</p>
+</blockquote>
+<p><strong>编写.proto文件</strong></p>
+<p>编写一个简单示例，用于编译演示：</p>
+<pre class="line-numbers language-protobuf"><code class="language-protobuf"><span class="token comment" spellcheck="true">/*
+    ProtoStudy.proto
+  头部相关声明
+*/</span>
+syntax <span class="token operator">=</span> <span class="token string">"proto3"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 语法版本为protobuf3.0</span>
+<span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>bp<span class="token punctuation">.</span>domain<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 定义包名</span>
+<span class="token comment" spellcheck="true">//import "common.proto"; // 导入common.proto</span>
+option java_package <span class="token operator">=</span> <span class="token string">"com.markus.bp.domain"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 指定java包</span>
+
+<span class="token keyword">message</span> TypeStudy<span class="token punctuation">{</span>
+  <span class="token primitive symbol">double</span> double_type <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">int32</span> int_type <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">int64</span> long_type <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="b-编译-proto文件"><a href="#b-编译-proto文件" class="headerlink" title="b.编译.proto文件"></a>b.编译.proto文件</h4><p>上面提到了用IDEA插件进行文件编译，下面记录下用终端命令来进行文件编译：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 进入到对应编写文件的路径中</span>
+➜  resources git:<span class="token punctuation">(</span>master<span class="token punctuation">)</span> ✗ <span class="token function">cd</span> proto
+➜  proto git:<span class="token punctuation">(</span>master<span class="token punctuation">)</span> ✗ <span class="token function">ls</span>
+ProtoStudy.proto UserProto.proto
+<span class="token comment" spellcheck="true"># 对ProtoStudy.proto文件进行编译,输出到指定目录下</span>
+➜  proto git:<span class="token punctuation">(</span>master<span class="token punctuation">)</span> ✗ protoc --java_out<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/java/  ProtoStudy.proto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下图即为编译成功后的Java文件</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/a8dcf49304d76f5ecd997a1a0af4f674.png" alt="image-20220513114016623"></p>
+<h4 id="c-使用编译后的Java类实现数据序列化与反序列化"><a href="#c-使用编译后的Java类实现数据序列化与反序列化" class="headerlink" title="c.使用编译后的Java类实现数据序列化与反序列化"></a>c.使用编译后的Java类实现数据序列化与反序列化</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>bp<span class="token punctuation">.</span>study<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>InvalidProtocolBufferException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>bp<span class="token punctuation">.</span>domain<span class="token punctuation">.</span>ProtoStudy<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @Description: protobuf 使用学习
+ * @Blog: http://markuszhang.com/
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProtoUseStudy</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> InvalidProtocolBufferException <span class="token punctuation">{</span>
+        ProtoStudy<span class="token punctuation">.</span>TypeStudy typeStudy <span class="token operator">=</span> ProtoStudy<span class="token punctuation">.</span>TypeStudy<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setDoubleType</span><span class="token punctuation">(</span><span class="token number">1.03D</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setIntType</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setLongType</span><span class="token punctuation">(</span>123L<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> typeStudy<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 将对象序列化为字节数据</span>
+
+        ProtoStudy<span class="token punctuation">.</span>TypeStudy typeStudyFromDeserialize <span class="token operator">=</span> ProtoStudy<span class="token punctuation">.</span>TypeStudy<span class="token punctuation">.</span><span class="token function">parseFrom</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 反序列化</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>typeStudyFromDeserialize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/*
+double_type: 1.03
+int_type: 123
+long_type: 123
+
+Process finished with exit code 0
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="三、原理分析"><a href="#三、原理分析" class="headerlink" title="三、原理分析"></a>三、原理分析</h2><h3 id="1、知识储备"><a href="#1、知识储备" class="headerlink" title="1、知识储备"></a>1、知识储备</h3><h4 id="a-网络通信协议"><a href="#a-网络通信协议" class="headerlink" title="a.网络通信协议"></a>a.网络通信协议</h4><p>TODO–&gt;网络相关的文章</p>
+<p>OSI七层模型、TCP/IP四层模型    </p>
+<h4 id="b-序列化与反序列化"><a href="#b-序列化与反序列化" class="headerlink" title="b.序列化与反序列化"></a>b.序列化与反序列化</h4><blockquote>
+<p>序列化与反序列化的过程是属于TCP/IP四层模型中的应用层、OSI七层模型的表示层。</p>
+</blockquote>
+<p>序列化与反序列化的作用就是在两台机器通信之间建立的一种数据表示的一种协议，能够让提供信息的机器制造的数据在接收信息的机器上能够正确的解析识别。</p>
+<ol>
+<li>序列化：把应用层的对象转换成二进制串（编码+存储）；</li>
+<li>反序列化：将二进制串转换成应用层的对象（解码+赋值）。</li>
+</ol>
+<h4 id="c-数据结构、对象与二进制串"><a href="#c-数据结构、对象与二进制串" class="headerlink" title="c.数据结构、对象与二进制串"></a>c.数据结构、对象与二进制串</h4><p>从Java维度来讲，对象 = Object = 类实例；二进制串 = byte[]；数据结构类似于POJO（Plain Old Java Object）或者JavaBean（只有getter和setter方法）</p>
+<h4 id="d-T-L-V数据存储格式"><a href="#d-T-L-V数据存储格式" class="headerlink" title="d.T-L-V数据存储格式"></a>d.T-L-V数据存储格式</h4><blockquote>
+<p>Tag-Length-Value是T-L-V的全称，即标识-长度-值的存储方式（其中长度length是可选的，比如Varint编码数据就不需要存储Length，下面会提到）</p>
+</blockquote>
+<p>数据可以通过Tag-Length-Value的方式来进行表示，多个数据以此种类型表示并进行拼接最终形成一个字节流，从而能实现数据的存储和通信</p>
+<p>示意图如下：<br><img src="https://img-blog.csdnimg.cn/67bf1947dc1645d1a251c293e7402f72.png" alt="在这里插入图片描述"></p>
+<p><strong>Tag</strong>是经过PB采用Varint &amp; Zigzag编码后的消息字段标识号 &amp; 数据类型的值；字段标识号就是.proto文件中的字段序号，数据类型值就是Wire Type值</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">WireFormat</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// wire type取值如下</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WIRETYPE_VARINT <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WIRETYPE_FIXED64 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WIRETYPE_LENGTH_DELIMITED <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WIRETYPE_START_GROUP <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WIRETYPE_END_GROUP <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WIRETYPE_FIXED32 <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>通过这种格式进行数据拼凑有以下特点：</p>
+<ul>
+<li>不需要分隔符就能区分字段，避免了分割符的使用；</li>
+<li>数据十分的紧凑，空间利用率非常高；</li>
+<li>对于没有设置值的字段不会进行编码，在字节流中完全不存在。<ul>
+<li>只有在解码的时候，如果这个字段不存在，会设置默认值</li>
+</ul>
+</li>
+</ul>
+<h4 id="e-小端序与大端序"><a href="#e-小端序与大端序" class="headerlink" title="e.小端序与大端序"></a>e.小端序与大端序</h4><blockquote>
+<p>这里就是说明一下 x86系列CPU是小端序，即低位字节存入低地址、高位字节存入高地址；Java数据和网络传输采用大端序，即高位字节存入低地址、低位字节存储高地址</p>
+<p><code>什么是高地址？什么是低地址？</code>:根据不同机型的堆栈设计，有两种情况：一是每入栈一个数，栈顶地址加1，每出栈一个数，栈顶地址减1，即堆栈区是由内存的低地址向高地址。另一种是每入栈一个数，栈顶地址减1，每出栈一个数，栈顶地址加1，即堆栈区是由内存的高地址向低地址。</p>
+</blockquote>
+<p><a href="https://blog.csdn.net/Casuall/article/details/98481469" target="_blank" rel="noopener">大端序和小端序_Casuall的博客-CSDN博客</a></p>
+<p>[java – Big Endian and Little Endian 大端和小端概念讲解及如何转换](<a href="https://blog.csdn.net/penriver/article/details/124765592#:~:text=java" target="_blank" rel="noopener">https://blog.csdn.net/penriver/article/details/124765592#:~:text=java</a> 全部为大端 (与平台无关) ： Java二进制文件中的所有内容都以 大端顺序,存储。 这意味着如果您只使用Java，那么所有文件在所有平台 (Mac、PC、UNIX等)上的处理方式都是相同的。 C语言默认是小端模式 ：用C语言编写的程序通常使用 小端顺序)</p>
+<h3 id="2、PB的序列化与反序列化过程"><a href="#2、PB的序列化与反序列化过程" class="headerlink" title="2、PB的序列化与反序列化过程"></a>2、PB的序列化与反序列化过程</h3><blockquote>
+<p>序列化与反序列化过程直接通过自身框架和编译器就能完成，编译器将编写的.proto文件编译成相应语言的代码，通过方法调用就能实现序列化和反序列化。</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/0aae6102fefa4326bf9d38d57c60d000.png" alt="在这里插入图片描述"></p>
+<h4 id="a-PB序列化过程"><a href="#a-PB序列化过程" class="headerlink" title="a.PB序列化过程"></a>a.PB序列化过程</h4><p><code>序列化使用：protoObject.toByteArray();</code></p>
+<ol>
+<li>判断每个字段是否设置了值，只有在有值的情况下才会进行相应的编码；</li>
+<li>根据字段的<code>标识号</code>以及<code>数据类型</code>，使用相对应的数据编码方式进行编码。</li>
+</ol>
+<h4 id="b-PB反序列化过程"><a href="#b-PB反序列化过程" class="headerlink" title="b.PB反序列化过程"></a>b.PB反序列化过程</h4><p><code>反序列化使用：ProtoObject.parseFrom(byte[]);</code></p>
+<ol>
+<li>通过将字节流读入，将字节流解码；</li>
+<li>将解析出来的数据，转换成相应语言的对象对于的数据结构里。</li>
+</ol>
+<h3 id="3、PB的序列化与反序列化原理"><a href="#3、PB的序列化与反序列化原理" class="headerlink" title="3、PB的序列化与反序列化原理"></a>3、PB的序列化与反序列化原理</h3><blockquote>
+<p>上面简单说了下Protobuf对数据进行序列化和反序列化的过程，接下来记录下它内部的原理。</p>
+<p>核心的类：CodedOutputStream、CodedInputStream</p>
+</blockquote>
+<p>前面我们说到，序列化就是对数据编码+存储的一个过程。Protobuf内部不同的数据类型，其编码格式以及存储方式如下图所示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Wire Type值</th>
+<th align="center">编码方式</th>
+<th align="center">编码长度</th>
+<th align="center">存储方式</th>
+<th align="center">相应的数据类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">Varint<br>（负数时，采用Zigzag辅助编码）</td>
+<td align="center">变长（1-10字节）</td>
+<td align="center">T-V</td>
+<td align="center">int32,int64,uint32,uint64,bool,enum,sint32,sint64</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">64-bit</td>
+<td align="center">固定8字节</td>
+<td align="center">T-V</td>
+<td align="center">fixed64,sfixed64,double</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">Length-delimi</td>
+<td align="center">变长</td>
+<td align="center">T-L-V</td>
+<td align="center">string,bytes,embedded messages,packed repeated fields</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">Start Group</td>
+<td align="center">已弃用</td>
+<td align="center">已弃用</td>
+<td align="center">Group（已弃用）</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">End Group</td>
+<td align="center">已弃用</td>
+<td align="center">已弃用</td>
+<td align="center">Group（已弃用）</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">32-bit</td>
+<td align="center">固定4字节</td>
+<td align="center">T-V</td>
+<td align="center">fixed32,sfixed64,float</td>
+</tr>
+</tbody></table>
+<h4 id="a-Varint编码（wiretype-0）"><a href="#a-Varint编码（wiretype-0）" class="headerlink" title="a.Varint编码（wiretype=0）"></a>a.Varint编码（wiretype=0）</h4><blockquote>
+<ul>
+<li>一种可变长的编码方式</li>
+<li>值越小，使用它编码后字节数越少，这样就起到了对数据进行压缩的作用</li>
+<li>不适合对负数用此方式编码</li>
+</ul>
+</blockquote>
+<p>接下来我们看下源码中的核心流程</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// proto编译器编译后的类，比如编写的.proto文件有三个字段，分别是double类型、int32类型以及int64类型，对应编译器就生成了这样的一段代码</span>
+<span class="token comment" spellcheck="true">// 下面这段代码也阐述之前的一个点：字段没有被设置值时，则会跳过不管</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">writeTo</span><span class="token punctuation">(</span>com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>CodedOutputStream output<span class="token punctuation">)</span>
+  <span class="token keyword">throws</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Double<span class="token punctuation">.</span><span class="token function">doubleToRawLongBits</span><span class="token punctuation">(</span>doubleType_<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 字段值不为空时，调用此方法对double类型数值进行编码</span>
+    output<span class="token punctuation">.</span><span class="token function">writeDouble</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> doubleType_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>intType_ <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 字段值不为空时，调用此方法对int32类型数值进行编码</span>
+    output<span class="token punctuation">.</span><span class="token function">writeInt32</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> intType_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>longType_ <span class="token operator">!=</span> 0L<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 字段值不为空时，调用此方法对int64类型数值进行编码</span>
+    output<span class="token punctuation">.</span><span class="token function">writeInt64</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> longType_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  unknownFields<span class="token punctuation">.</span><span class="token function">writeTo</span><span class="token punctuation">(</span>output<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 这里以int32类型来看Varint编码流程</span>
+<span class="token comment" spellcheck="true">// CodedOutputStream#writeInt32</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeInt32</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> fieldNumber<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//写入标识，也就是Tag-Length-Value中的Tag（此方法内部就是将字段号+wiretype用一个或多个字节表示，低三位表示wiretype，高位表示字段号，字段越大，占用的字节数越多）</span>
+  <span class="token function">writeTag</span><span class="token punctuation">(</span>fieldNumber<span class="token punctuation">,</span> WireFormat<span class="token punctuation">.</span>WIRETYPE_VARINT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//开始对数据进行编码</span>
+  <span class="token function">writeInt32NoTag</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// CodedOutputStream#writeInt32NoTag</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeInt32NoTag</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 正数，直接使用Varint编码，我们先分析这个方法</span>
+    <span class="token function">writeUInt32NoTag</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 负数，就会通过int64类型Varint编码来做，会始终使用10字节表示数据（想要避免这种情况就采用sint32来编码负数）</span>
+    <span class="token comment" spellcheck="true">// Must sign-extend.</span>
+    <span class="token function">writeUInt64NoTag</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeUInt32NoTag</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>HAS_UNSAFE_ARRAY_OPERATIONS
+      <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>Android<span class="token punctuation">.</span><span class="token function">isOnAndroidDevice</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token operator">&amp;&amp;</span> <span class="token function">spaceLeft</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">>=</span> MAX_VARINT32_SIZE<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// xxx 此处代码不关心</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// Varint编码的核心流程</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 判断value(31bit-8bit)是否还有有效数字，如果没有的话，说明这次循环是最后一次右移操作</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>value <span class="token operator">&amp;</span> <span class="token operator">~</span><span class="token number">0x7F</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment" spellcheck="true">// 将value转为byte类型值，低七位为有效数字，第八位补0得到1字节数据</span>
+          buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> value<span class="token punctuation">;</span>
+          <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+          <span class="token comment" spellcheck="true">// &lt;1> (value &amp; 0x7F) --> 得到字节串低七位数据</span>
+          <span class="token comment" spellcheck="true">// &lt;2> (value &amp; 0x7F) | 0x80 --> 高位补1得到1字节数据</span>
+          buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>value <span class="token operator">&amp;</span> <span class="token number">0x7F</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token number">0x80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment" spellcheck="true">// &lt;3> 将字节串无符号右移7位</span>
+          value <span class="token operator">>>>=</span> <span class="token number">7</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IndexOutOfBoundsException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">OutOfSpaceException</span><span class="token punctuation">(</span>
+        String<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"Pos: %d, limit: %d, len: %d"</span><span class="token punctuation">,</span> position<span class="token punctuation">,</span> limit<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// CodedInputStream#readRawVarint64SlowPath 解码的核心代码</span>
+<span class="token comment" spellcheck="true">// 在调用此方法的时候就已经确定了当前字段值的字节串的起始位置</span>
+<span class="token keyword">long</span> <span class="token function">readRawVarint64SlowPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">long</span> result <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> shift <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> shift <span class="token operator">&lt;</span> <span class="token number">64</span><span class="token punctuation">;</span> shift <span class="token operator">+=</span> <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//&lt;1> 顺序读入字节</span>
+    <span class="token keyword">final</span> <span class="token keyword">byte</span> b <span class="token operator">=</span> <span class="token function">readRawByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//&lt;2> (b &amp; 0x7F) 将当前字节最高位置为0</span>
+    <span class="token comment" spellcheck="true">//&lt;3> (b &amp; 0x7F) &lt;&lt; shift 左移shift位 （这里也是Protobuf采用小端序存储，转换为Java大端序存储的处理方法）</span>
+    <span class="token comment" spellcheck="true">//&lt;4> 将result 与(long) (b &amp; 0x7F) &lt;&lt; shift做或等操作</span>
+    result <span class="token operator">|=</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span> <span class="token number">0x7F</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> shift<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>b <span class="token operator">&amp;</span> <span class="token number">0x80</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">throw</span> InvalidProtocolBufferException<span class="token punctuation">.</span><span class="token function">malformedVarint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>看完源码后，我们可能会有一个疑问：在编码时，在高位有数据时，用7bit有效位+0组成1字节数据；高位无数据时用7bit有效位+1组成1字节数据呢？</p>
+<p>这个问题其实也侧面反映了为什么Varint编码不需要<code>T-L-V</code>中的<code>L</code>了，它会将数值每7位为一组，第8位表示符号位，告诉程序当前字段数据是否到最后了，在解析时，遍历字节时，当判断第8位为1的时候说明此字段数据还没有结束，直到遍历到一个字节的高8位是0时结束，这样就省去Length来代表数据的长度了。</p>
+<p>下面通过两个例子来顺一下源码的意思：</p>
+<p><img src="https://img-blog.csdnimg.cn/18314c44b9074c639562c7094ce8d601.png" alt="在这里插入图片描述"></p>
+<p>从上图可以看出：</p>
+<ul>
+<li>对于int32类型值来说，普通存储的话得需要4字节，而通过Varint编码可以让其降到更低；</li>
+<li>当数据超过2^28^时，才会使用5字节来表示4字节数据；当数据在小于2^21^时，数据会使用3字节以内来表示数据；也就是说当数据小于2^21^时，就达到了数据压缩的效果。                                                                                                                                                                              </li>
+</ul>
+<p>接下来再来看下Varint解码的过程</p>
+<p><img src="https://img-blog.csdnimg.cn/b4fe3de26bc1459a902e16c19c656f8d.png" alt="在这里插入图片描述"></p>
+<h4 id="b-Zigzag编码-wiretype-0"><a href="#b-Zigzag编码-wiretype-0" class="headerlink" title="b.Zigzag编码(wiretype=0)"></a>b.Zigzag编码(wiretype=0)</h4><blockquote>
+<p>上面记录了Varint编码的过程，我们知道越小的数据，编码后占用的字节数越少，那么问题来了，当数据表示的是负数时怎么办呢？负数的最高位为1，如果单纯的用Varint编码的话，负数会被认为成一个很大的数，会使用10字节表示数据，那怎么办呢？Zigzag就解决了这个问题。</p>
+<ul>
+<li>Zigzag也是一种可变长编码方式</li>
+<li>通过使用<code>无符号数</code>来表示 <code>有符号数字</code>，这样使得绝对值小的数据就可以采用较少<code>字节</code>来表示</li>
+</ul>
+</blockquote>
+<p>针对上述情况，protobuf通过将数据先进行Zigzag编码再进行Varint编码，我们将字段类型更换为sint32类型：</p>
+<pre class="line-numbers language-protobuf"><code class="language-protobuf"><span class="token comment" spellcheck="true">/*
+  头部相关声明
+*/</span>
+syntax <span class="token operator">=</span> <span class="token string">"proto3"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 语法版本为protobuf3.0</span>
+<span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>bp<span class="token punctuation">.</span>domain<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 定义包名</span>
+<span class="token comment" spellcheck="true">//import "common.proto"; // 导入common.proto</span>
+option java_package <span class="token operator">=</span> <span class="token string">"com.markus.bp.domain"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 指定java包</span>
+
+<span class="token keyword">message</span> TypeStudy<span class="token punctuation">{</span>
+  <span class="token primitive symbol">double</span> double_type <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">int32</span> int_type <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">int64</span> long_type <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">sint32</span> sint_type <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 本次新增</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们来看下示例: </p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProtoUseStudy</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> InvalidProtocolBufferException <span class="token punctuation">{</span>
+        ProtoStudy<span class="token punctuation">.</span>TypeStudy typeStudy <span class="token operator">=</span> ProtoStudy<span class="token punctuation">.</span>TypeStudy<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setDoubleType</span><span class="token punctuation">(</span><span class="token number">1.03D</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setIntType</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setLongType</span><span class="token punctuation">(</span>123L<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setSintType</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 本次调试这个源码</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> typeStudy<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 将对象序列化为字节数据</span>
+
+        ProtoStudy<span class="token punctuation">.</span>TypeStudy typeStudyFromDeserialize <span class="token operator">=</span> ProtoStudy<span class="token punctuation">.</span>TypeStudy<span class="token punctuation">.</span><span class="token function">parseFrom</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>typeStudyFromDeserialize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们来看下源码:</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// CodedOutputStream#writeSInt32</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeSInt32</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> fieldNumber<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//&lt;1> encodeZigZag32(value) --> 使用ZigZag编码</span>
+  <span class="token comment" spellcheck="true">//&lt;2> 和int32流程一样（本次不赘述了）</span>
+  <span class="token function">writeUInt32</span><span class="token punctuation">(</span>fieldNumber<span class="token punctuation">,</span> <span class="token function">encodeZigZag32</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// CodedOutputStream#encodeZigZag32</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">encodeZigZag32</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// Note:  the right-shift must be arithmetic --> 右移操作必须是算术右移，也就是有符号右移，最高位为1时，右移高位补1，否则补0</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>n <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//&lt;1> n &lt;&lt; 1 --> 将二进制数据左移1位</span>
+  <span class="token comment" spellcheck="true">//&lt;2> n >> 31 --> 将二进制数据右移31位</span>
+  <span class="token comment" spellcheck="true">//&lt;3> 两者结果做异或运算</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// CodedInputStream#decodeZigZag32</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">decodeZigZag32</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>n <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token operator">-</span><span class="token punctuation">(</span>n <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Zigzag编码流程图如下（更直观）</p>
+<p><img src="https://img-blog.csdnimg.cn/0dcda3073ec44e0386bac9960c19958a.png" alt="\[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-I6QgiWo1-1652596106145)(http://cdn.markuszhang.com/img/fced6eee5ebcb842abbfc0d905efcdb3.png)\]"></p>
+<p>Zigzag编码就是对Varint编码的补充，从而更好的进行数据压缩。所以当我们提前已经知道我们的数据可能有负数时，应该提早采用<code>sint32/sint64</code>数据类型</p>
+<h4 id="c-64-32-bit固定编码-wiretype-1-amp-5"><a href="#c-64-32-bit固定编码-wiretype-1-amp-5" class="headerlink" title="c.64(32)-bit固定编码(wiretype=1&amp;5)"></a>c.64(32)-bit固定编码(wiretype=1&amp;5)</h4><blockquote>
+<p>64(32)-bit编码方式：编码后的数据具备固定大小 = 64位（8字节）/32位（4字节）</p>
+<p>使用类型：</p>
+<ul>
+<li>64-bit: fixed64 sfixed64 double</li>
+<li>32-bit: fixed32 sfixed32 int</li>
+</ul>
+</blockquote>
+<p>这里我们拿double(64-bit编码)来举例：</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// CodedOutputStream#writeDouble</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeDouble</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> fieldNumber<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">double</span> value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//&lt;1> Double.doubleToRawLongBits(value) 将double值转为8字节表示</span>
+  <span class="token comment" spellcheck="true">//&lt;2> writeFixed64()进行固定64-bit编码</span>
+  <span class="token function">writeFixed64</span><span class="token punctuation">(</span>fieldNumber<span class="token punctuation">,</span> Double<span class="token punctuation">.</span><span class="token function">doubleToRawLongBits</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// CodedOutputStream#writeFixed64</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeFixed64</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> fieldNumber<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">long</span> value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//&lt;1> 写入Tag</span>
+  <span class="token function">writeTag</span><span class="token punctuation">(</span>fieldNumber<span class="token punctuation">,</span> WireFormat<span class="token punctuation">.</span>WIRETYPE_FIXED64<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//&lt;2> 对Value进行编码</span>
+  <span class="token function">writeFixed64NoTag</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 固定编码比较简单（高位在后，低位在前）</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeFixed64NoTag</span><span class="token punctuation">(</span><span class="token keyword">long</span> value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 从低位开始，依次进行编码</span>
+    buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value <span class="token operator">>></span> <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value <span class="token operator">>></span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value <span class="token operator">>></span> <span class="token number">32</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value <span class="token operator">>></span> <span class="token number">40</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value <span class="token operator">>></span> <span class="token number">48</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buffer<span class="token punctuation">[</span>position<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value <span class="token operator">>></span> <span class="token number">56</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IndexOutOfBoundsException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">OutOfSpaceException</span><span class="token punctuation">(</span>
+      String<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"Pos: %d, limit: %d, len: %d"</span><span class="token punctuation">,</span> position<span class="token punctuation">,</span> limit<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>通过源码，我们也可以看到固定编码方式也是通过Tag-Value的方式进行存储的。</p>
+<h4 id="d-Length-delimi编码-wiretype-2"><a href="#d-Length-delimi编码-wiretype-2" class="headerlink" title="d.Length-delimi编码(wiretype=2)"></a>d.Length-delimi编码(wiretype=2)</h4><blockquote>
+<ul>
+<li>string、bytes类型编码</li>
+<li>message嵌套编码</li>
+<li>repeated编码</li>
+</ul>
+</blockquote>
+<p><strong>string、bytes类型编码：</strong></p>
+<p>这次我们通过string类型来分析源码：</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// GeneratedMessageV3#writeString</span>
+<span class="token keyword">protected</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">writeString</span><span class="token punctuation">(</span>
+  CodedOutputStream output<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> fieldNumber<span class="token punctuation">,</span> <span class="token keyword">final</span> Object value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 两种编码方式</span>
+  <span class="token comment" spellcheck="true">// string类型</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token keyword">instanceof</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    output<span class="token punctuation">.</span><span class="token function">writeString</span><span class="token punctuation">(</span>fieldNumber<span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// bytes类型</span>
+    output<span class="token punctuation">.</span><span class="token function">writeBytes</span><span class="token punctuation">(</span>fieldNumber<span class="token punctuation">,</span> <span class="token punctuation">(</span>ByteString<span class="token punctuation">)</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// GeneratedMessageV3#writeStringNoTag</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeStringNoTag</span><span class="token punctuation">(</span>String value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">final</span> <span class="token keyword">int</span> oldPosition <span class="token operator">=</span> position<span class="token punctuation">;</span>
+  <span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// UTF-8 byte length of the string is at least its UTF-16 code unit length (value.length()),</span>
+    <span class="token comment" spellcheck="true">// and at most 3 times of it. We take advantage of this in both branches below.</span>
+    <span class="token comment" spellcheck="true">// UTF-16 固定2字节</span>
+    <span class="token comment" spellcheck="true">// UTF-8 有可能1字节、2字节、3字节，但最多不超过3个。</span>
+    <span class="token comment" spellcheck="true">// 如果全部为英文或大部分都是英文的话，那么UTF-8占优势；相反如果全部是中文或者大部分是中文的话，UTF-16占优势</span>
+    <span class="token keyword">final</span> <span class="token keyword">int</span> maxLength <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> Utf8<span class="token punctuation">.</span>MAX_BYTES_PER_CHAR<span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token keyword">int</span> maxLengthVarIntSize <span class="token operator">=</span> <span class="token function">computeUInt32SizeNoTag</span><span class="token punctuation">(</span>maxLength<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token keyword">int</span> minLengthVarIntSize <span class="token operator">=</span> <span class="token function">computeUInt32SizeNoTag</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>minLengthVarIntSize <span class="token operator">==</span> maxLengthVarIntSize<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      position <span class="token operator">=</span> oldPosition <span class="token operator">+</span> minLengthVarIntSize<span class="token punctuation">;</span>
+      <span class="token keyword">int</span> newPosition <span class="token operator">=</span> Utf8<span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> position<span class="token punctuation">,</span> <span class="token function">spaceLeft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// Since this class is stateful and tracks the position, we rewind and store the state,</span>
+      <span class="token comment" spellcheck="true">// prepend the length, then reset it back to the end of the string.</span>
+      position <span class="token operator">=</span> oldPosition<span class="token punctuation">;</span>
+      <span class="token keyword">int</span> length <span class="token operator">=</span> newPosition <span class="token operator">-</span> oldPosition <span class="token operator">-</span> minLengthVarIntSize<span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// 长度采用Varint编码</span>
+      <span class="token function">writeUInt32NoTag</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      position <span class="token operator">=</span> newPosition<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token keyword">int</span> length <span class="token operator">=</span> Utf8<span class="token punctuation">.</span><span class="token function">encodedLength</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// 长度采用Varint编码</span>
+      <span class="token function">writeUInt32NoTag</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      position <span class="token operator">=</span> Utf8<span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> position<span class="token punctuation">,</span> <span class="token function">spaceLeft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">UnpairedSurrogateException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// Roll back the change - we fall back to inefficient path.</span>
+    position <span class="token operator">=</span> oldPosition<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// TODO(nathanmittler): We should throw an IOException here instead.</span>
+    <span class="token function">inefficientWriteStringNoTag</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IndexOutOfBoundsException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">OutOfSpaceException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://img-blog.csdnimg.cn/1e92243464524ade994abe7219848176.png" alt></p>
+<p><strong>message嵌套编码</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// CodedOutputStream#writeMessage</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeMessage</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> fieldNumber<span class="token punctuation">,</span> <span class="token keyword">final</span> MessageLite value<span class="token punctuation">)</span>
+  <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token function">writeTag</span><span class="token punctuation">(</span>fieldNumber<span class="token punctuation">,</span> WireFormat<span class="token punctuation">.</span>WIRETYPE_LENGTH_DELIMITED<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">writeMessageNoTag</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// CodedOutputStream#writeMessageNoTag</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">writeMessageNoTag</span><span class="token punctuation">(</span><span class="token keyword">final</span> MessageLite value<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//&lt;1> 采用varint编码写入长度</span>
+  <span class="token function">writeUInt32NoTag</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">getSerializedSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//&lt;2> 其实就递归调用write，进行嵌套message里的类型编码</span>
+  value<span class="token punctuation">.</span><span class="token function">writeTo</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-HI8woxmf-1652596106146)(<a href="http://cdn.markuszhang.com/img/483dc0b911ff535efba0c42d8a75d49e.png)]" target="_blank" rel="noopener">http://cdn.markuszhang.com/img/483dc0b911ff535efba0c42d8a75d49e.png)]</a></p>
+<p><strong>repeated编码</strong></p>
+<pre class="line-numbers language-protobuf"><code class="language-protobuf"><span class="token keyword">message</span> TypeStudy<span class="token punctuation">{</span>
+  <span class="token primitive symbol">double</span> double_type <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">int32</span> int_type <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">int64</span> long_type <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">sint32</span> sint_type <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+  <span class="token builtin">repeated</span> <span class="token primitive symbol">int32</span> int_list <span class="token operator">=</span> <span class="token number">5</span> <span class="token punctuation">[</span>packed <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 通过packed修饰，proto3默认为true</span>
+  <span class="token primitive symbol">string</span> string_type <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
+  Learn learn_type <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+<span class="token keyword">message</span> Learn<span class="token punctuation">{</span>
+  <span class="token primitive symbol">int32</span> int_type <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token primitive symbol">int64</span> long_type <span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// packed=true</span>
+<span class="token comment" spellcheck="true">// proto类的writeTo方法</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">getIntListList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  output<span class="token punctuation">.</span><span class="token function">writeUInt32NoTag</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 只设置一遍</span>
+  output<span class="token punctuation">.</span><span class="token function">writeUInt32NoTag</span><span class="token punctuation">(</span>intListMemoizedSerializedSize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> intList_<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 就不用设置集合内每一个数值的Tag了。</span>
+  output<span class="token punctuation">.</span><span class="token function">writeInt32NoTag</span><span class="token punctuation">(</span>intList_<span class="token punctuation">.</span><span class="token function">getInt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// packed=false</span>
+<span class="token comment" spellcheck="true">// proto类的writeTo方法</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> intList_<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 每个值都设置相同的Tag标识</span>
+  output<span class="token punctuation">.</span><span class="token function">writeInt32</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> intList_<span class="token punctuation">.</span><span class="token function">getInt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>对于protobuf的学习记录就这些了，下面对Protobuf做一个简单的总结。</p>
+<ol>
+<li>对于性能分析那块，吞吐量的值不一定正确，不同机器环境不同，测试的结果也有不同，我在尽量保证版本发布时期一致的情况下给出了各序列化协议的性能分析<ol>
+<li>序列化速度：protobuf &gt; jackson &gt; kryo &gt; protostuff &gt; fst &gt; fastJson &gt; jdk &gt; xml</li>
+<li>反序列化速度：protobuf &gt; fst &gt; protostuff &gt; kryo &gt; jackson &gt; fastJson &gt; jdk &gt; xml</li>
+<li>当然，我这里测试代码可能会使用的不当，如果有不同意见的朋友也可评论一下原因和真实情况，再附上我的测试代码：<a href="https://github.com/markuszcl99/BinaryProtocol/tree/master/src/main/java/com/markus/bp/test" target="_blank" rel="noopener">源码链接</a></li>
+</ol>
+</li>
+<li>当我们的系统需要使用序列化，并且对性能和空间有要求的话，可以了解下protobuf的解决方案</li>
+<li>我们经常所说的protobuf具有数据压缩的效果就是通过它的Varint的编码方式以及T-L-V紧凑的存储方式来实现的</li>
+<li>protobuf序列化&amp;反序列化速度快的原因是它的编码&amp;解码方式简单（只需要进行简单的数学运算操作来完成的）</li>
+<li>本文测试的对象进行序列化：protobuf的压缩效果是fastjson的1/3，和protostuff的压缩效果接近，当我们对系统的性能要求不是很大的情况下，可以考虑protostuff来解决<ol>
+<li>protostuff是面向Java语言的protobuf框架，它能支持Java的复杂对象(无法通过proto文件编写的)，也就是说数据结构支持的更好；对Java语言友好</li>
+</ol>
+</li>
+</ol>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《ProtocolBuffer源码分析》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/protocolbuffer-yuan-ma-fen-xi.html" property="cc:attributionName"
+               rel="cc:attributionURL">
+                张成龙
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="//code.bdstatic.com/npm/leancloud-storage@4.12.2/dist/av-min.js"></script>
+<!-- <script src="/libs/valine/av-min.js"></script> -->
+<!-- <script src="/libs/valine/Valine.min.js"></script> -->
+<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> 
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'SCbkxYBoSKhu1zu3zpmdV8CI-MdYXbMMI',
+        appKey: 'emRhdYm4mVM1aTXuWIy6anPK',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！',
+        serverURLs: 'https://SCbkxYBo.api.lncldglobal.com'  // 增加这一行！！！
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/git-cai-keng-fatal-unable-to-create-git-index-lock-de-cuo-wu.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Git踩坑-fatal:Unable to create“.../.git/index.lock“ 的错误">
+                        
+                        <span class="card-title">Git踩坑-fatal:Unable to create“.../.git/index.lock“ 的错误</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            出现的错误
+出现错误的原因我在更新笔记上传git的时候，出现了误操作，在commit的时候参数指定错误，正常流程是这样的：
+git add ./xx
+git commit -m "message"
+git push origin maste
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-04
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/踩坑/" class="post-category" target="_blank">
+                                    踩坑
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/git/" target="_blank">
+                        <span class="chip bg-color">git</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/spring-aop-zhu-jie-qu-dong-shi-yong-ji-qi-shi-xian-yuan-li.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="《Spring 5.x源码解析之Spring AOP 注解驱动使用及其实现原理》">
+                        
+                        <span class="card-title">《Spring 5.x源码解析之Spring AOP 注解驱动使用及其实现原理》</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            在本节，我们详细介绍Spring AOP所支持的AspectJ注解使用，在目标方法拦截上介绍@Before、@After、@AfterReturning、@AfterThrowing、@Around、@DeclareParents以及在切入点表达式上介绍execution、within、target、this、args、@args、@target、@within、@annotation的使用
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/spring/" class="post-category" target="_blank">
+                                    spring
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/aop/" target="_blank">
+                        <span class="chip bg-color">aop</span>
+                    </a>
+                    
+                    <a href="/tags/注解/" target="_blank">
+                        <span class="chip bg-color">注解</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: MarkusZhang's Blog<br />'
+            + '作者: 张成龙<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+       <div class="Copy-right">
+            &copy; 2023 MarkusZhang. All Rights Reserved.
+
+                    
+           <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
+           
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">18.8k
+             丨            
+          
+
+            <span id="sitetime"></span>
+
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-users"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="red-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+               人次,&nbsp;<i class="fa fa-user"></i>访客数 <span id="busuanzi_value_site_uv" class="blue-color"></span> 人.
+            </span>
+            
+            
+        </div>        
+        <div class="social-link social-statis">
+    <a href="https://github.com/markuszcl99" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="https://blog.csdn.net/MarkusZhang?type=blog" class="tooltipped" target="_blank" data-tooltip="访问我的CSDN主页" data-position="top" data-delay="50">
+        <i class="iconfont icon-csdn"></i>
+    </a>
+
+
+
+    <a href="https://juejin.cn/user/2928754709245470" class="tooltipped" target="_blank" data-tooltip="访问我的掘金主页" data-position="top" data-delay="50">
+        <i class="iconfont icon-juejin"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+    <div class="container row center-align">
+    <div class="github-badge">
+      <a style="color: #fff" rel="license" href="https://hexo.io/" target="_blank" title="由 Hexo 强力驱动">
+      <span class="badge-subject">Powered</span><span class="badge-value bg-blue">Hexo</span></a>
+    </div>
+    <div class="github-badge">
+      <a style="color: #fff" rel="license" href="https://github.com/" target="_blank" title="静态网页托管于 GitHub Pages">
+      <span class="badge-subject">Hosted</span><span class="badge-value bg-brightgreen">GitHub</span></a>
+    </div>
+    <div class="github-badge">
+      <a style="color: #fff" rel="license" href="https://www.cloud.tencent.com/" target="_blank" title="腾讯云提供域名相关服务">
+      <span class="badge-subject">DNS</span><span class="badge-value bg-blueviolet">Tencent cloud</span></a>
+    </div>
+    <!-- <div class="github-badge">
+      <a style="color: #fff" rel="license" href="https://www.jsdelivr.com/" target="_blank" title="jsDelivr 提供 CDN 加速服务">
+      <span class="badge-subject">CDN</span><span class="badge-value bg-orange">jsDelivr</span></a>
+    </div> -->
+    <div class="github-badge">
+        <a style="color: #fff" rel="license" href="https://github.com/blinkfox/hexo-theme-matery/" target="_blank" title="站点使用 Matery 主题">
+      <span class="badge-subject">Theme</span><span class="badge-value bg-blue">Matery</span></a>
+    </div>
+    <div class="github-badge">
+      <a style="color: #fff" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="本站点采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可">
+      <span class="badge-subject"><i class="fa fa-copyright"></i></span><span class="badge-value bg-lightgrey">BY-NC-SA 4.0</span></a>
+    </div>
+    <div class="github-badge">
+      <a style="color: #fff" rel="license" href="https://996.icu/" target="_blank" title="支持 996.ICU">
+      <span class="badge-subject">Link</span><span class="badge-value bg-red">996.ICU</span></a>
+    </div>
+    <!-- <div class="github-badge">
+      <span class="badge-subject">UV</span><span class="badge-value bg-orange" id="busuanzi_value_site_uv"></span>
+    </div>
+    <div class="github-badge">
+      <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
+    </div> -->
+    <div class="github-badge">
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">18.8k</span>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2023, 01, 01, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+   <!--单击显示文字-->
+   <script type="text/javascript" src="/js/click_show_text.js"></script> 
+
+   <!--动态线条背景-->
+   <script type="text/javascript"
+   color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+   </script>
+
+   <script async src =“ https://cdn.jsdelivr.net/npm/perfops-rom”> </ script>
+
+  <!--自定义看板娘-->
+  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+  <script src="/live2d-widget/autoload.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"/>
+
+</body>
+
+</html>

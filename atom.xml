@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://101.43.146.21/"/>
-  <updated>2023-02-04T08:41:39.994Z</updated>
+  <updated>2023-02-04T09:05:50.699Z</updated>
   <id>https://101.43.146.21/</id>
   
   <author>
@@ -17,18 +17,131 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>面经系列</title>
+    <link href="https://101.43.146.21/mian-jing-dao-hang.html"/>
+    <id>https://101.43.146.21/mian-jing-dao-hang.html</id>
+    <published>2023-02-04T09:03:00.000Z</published>
+    <updated>2023-02-04T09:05:50.699Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="面经" scheme="https://101.43.146.21/categories/%E9%9D%A2%E7%BB%8F/"/>
+    
+    
+      <category term="导航" scheme="https://101.43.146.21/tags/%E5%AF%BC%E8%88%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git踩坑-fatal:Unable to create“.../.git/index.lock“ 的错误</title>
+    <link href="https://101.43.146.21/git-cai-keng-fatal-unable-to-create-git-index-lock-de-cuo-wu.html"/>
+    <id>https://101.43.146.21/git-cai-keng-fatal-unable-to-create-git-index-lock-de-cuo-wu.html</id>
+    <published>2023-02-04T09:01:17.000Z</published>
+    <updated>2023-02-04T09:05:04.335Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;出现的错误&quot;&gt;&lt;a href=&quot;#出现的错误&quot; class=&quot;headerlink&quot; title=&quot;出现的错误&quot;&gt;&lt;/a&gt;出现的错误&lt;/h1&gt;&lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+      <category term="踩坑" scheme="https://101.43.146.21/categories/%E8%B8%A9%E5%9D%91/"/>
+    
+    
+      <category term="git" scheme="https://101.43.146.21/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ProtocolBuffer源码分析</title>
+    <link href="https://101.43.146.21/protocolbuffer-yuan-ma-fen-xi.html"/>
+    <id>https://101.43.146.21/protocolbuffer-yuan-ma-fen-xi.html</id>
+    <published>2023-02-04T08:55:59.000Z</published>
+    <updated>2023-02-04T08:58:15.936Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;ProtocolBuffer学习&quot;&gt;&lt;a href=&quot;#ProtocolBuffer学习&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="协议" scheme="https://101.43.146.21/categories/%E5%8D%8F%E8%AE%AE/"/>
+    
+    
+      <category term="protobuf" scheme="https://101.43.146.21/tags/protobuf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>《Spring 5.x源码解析之Spring AOP 注解驱动使用及其实现原理》</title>
+    <link href="https://101.43.146.21/spring-aop-zhu-jie-qu-dong-shi-yong-ji-qi-shi-xian-yuan-li.html"/>
+    <id>https://101.43.146.21/spring-aop-zhu-jie-qu-dong-shi-yong-ji-qi-shi-xian-yuan-li.html</id>
+    <published>2023-02-04T08:54:35.000Z</published>
+    <updated>2023-02-04T09:04:36.222Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;学好路更宽，钱多少加班。—- mercyblitz&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="spring" scheme="https://101.43.146.21/categories/spring/"/>
+    
+    
+      <category term="aop" scheme="https://101.43.146.21/tags/aop/"/>
+    
+      <category term="注解" scheme="https://101.43.146.21/tags/%E6%B3%A8%E8%A7%A3/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Spring源码系列文章</title>
     <link href="https://101.43.146.21/spring-yuan-ma-shu-li-xi-lie-wen-zhang.html"/>
     <id>https://101.43.146.21/spring-yuan-ma-shu-li-xi-lie-wen-zhang.html</id>
     <published>2023-02-04T08:39:21.000Z</published>
-    <updated>2023-02-04T08:41:39.994Z</updated>
+    <updated>2023-02-04T08:58:37.864Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;spring 系列文章导航&lt;/p&gt;
+      
+      
+        
+        
+          &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/markuszcl99/simple-spring/blob/master/02-doc/SpringFramework简介.md&quot; target=&quot;_blank&quot;
+        
+      
     
     </summary>
     
+      <category term="spring" scheme="https://101.43.146.21/categories/spring/"/>
+    
+    
+      <category term="导航" scheme="https://101.43.146.21/tags/%E5%AF%BC%E8%88%AA/"/>
     
   </entry>
   
@@ -37,14 +150,24 @@
     <link href="https://101.43.146.21/lz4-ya-suo-suan-fa.html"/>
     <id>https://101.43.146.21/lz4-ya-suo-suan-fa.html</id>
     <published>2023-02-04T08:25:44.000Z</published>
-    <updated>2023-02-04T08:42:20.078Z</updated>
+    <updated>2023-02-04T08:59:12.271Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;1&lt;/p&gt;
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、简介&quot;&gt;&lt;a href=&quot;#一、简介&quot; class=&quot;headerlink&quot; title=&quot;一、简介&quot;&gt;&lt;/a&gt;一、简介&lt;/h2&gt;&lt;p&gt;Lz4压缩算法是由Yann
+        
+      
     
     </summary>
     
+      <category term="协议" scheme="https://101.43.146.21/categories/%E5%8D%8F%E8%AE%AE/"/>
+    
+    
+      <category term="lz4" scheme="https://101.43.146.21/tags/lz4/"/>
     
   </entry>
   
