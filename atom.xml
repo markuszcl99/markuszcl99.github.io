@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://101.43.146.21/"/>
-  <updated>2023-02-04T09:19:39.326Z</updated>
+  <updated>2023-02-04T10:21:47.370Z</updated>
   <id>https://101.43.146.21/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>@Autowired注入原理</title>
+    <link href="https://101.43.146.21/autowired-zhu-ru-yuan-li.html"/>
+    <id>https://101.43.146.21/autowired-zhu-ru-yuan-li.html</id>
+    <published>2023-02-04T10:19:49.000Z</published>
+    <updated>2023-02-04T10:21:47.370Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>ReentrantLock与AQS的源码学习笔记</title>
@@ -150,7 +164,7 @@
     <link href="https://101.43.146.21/spring-yuan-ma-shu-li-xi-lie-wen-zhang.html"/>
     <id>https://101.43.146.21/spring-yuan-ma-shu-li-xi-lie-wen-zhang.html</id>
     <published>2023-02-04T08:39:21.000Z</published>
-    <updated>2023-02-04T08:58:37.864Z</updated>
+    <updated>2023-02-04T10:23:08.185Z</updated>
     
     <summary type="html">
     
@@ -159,8 +173,8 @@
         
         
           &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/markuszcl99/simple-spring/blob/master/02-doc/SpringFramework简介.md&quot; target=&quot;_blank&quot;
+&lt;h1 id=&quot;一、系列篇&quot;&gt;&lt;a href=&quot;#一、系列篇&quot; class=&quot;headerlink&quot; title=&quot;一、系列篇&quot;&gt;&lt;/a&gt;一、系列篇&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a
         
       
     
