@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://101.43.146.21/"/>
-  <updated>2023-02-04T10:21:47.370Z</updated>
+  <updated>2023-02-04T15:44:31.480Z</updated>
   <id>https://101.43.146.21/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux指令笔记</title>
+    <link href="https://101.43.146.21/linux-zhi-ling-bi-ji.html"/>
+    <id>https://101.43.146.21/linux-zhi-ling-bi-ji.html</id>
+    <published>2023-02-04T13:16:29.000Z</published>
+    <updated>2023-02-04T15:44:31.480Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、帮助命令：man、help、info&quot;&gt;&lt;a href=&quot;#一、帮助命令：man、help、info&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="操作系统" scheme="https://101.43.146.21/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="linux" scheme="https://101.43.146.21/tags/linux/"/>
+    
+      <category term="command" scheme="https://101.43.146.21/tags/command/"/>
+    
+  </entry>
   
   <entry>
     <title>@Autowired注入原理</title>
