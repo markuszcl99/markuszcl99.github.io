@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://101.43.146.21/"/>
-  <updated>2023-02-04T15:44:31.480Z</updated>
+  <updated>2023-02-05T05:06:29.897Z</updated>
   <id>https://101.43.146.21/</id>
   
   <author>
@@ -17,11 +17,79 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>文件系统</title>
+    <link href="https://101.43.146.21/wen-jian-xi-tong.html"/>
+    <id>https://101.43.146.21/wen-jian-xi-tong.html</id>
+    <published>2023-02-05T05:06:29.000Z</published>
+    <updated>2023-02-05T05:06:29.897Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>新I/O系统</title>
+    <link href="https://101.43.146.21/xin-i-o-xi-tong.html"/>
+    <id>https://101.43.146.21/xin-i-o-xi-tong.html</id>
+    <published>2023-02-05T05:06:21.000Z</published>
+    <updated>2023-02-05T05:06:21.846Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>标准I/O</title>
+    <link href="https://101.43.146.21/biao-zhun-i-o.html"/>
+    <id>https://101.43.146.21/biao-zhun-i-o.html</id>
+    <published>2023-02-05T05:06:12.000Z</published>
+    <updated>2023-02-05T05:06:12.742Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>I/O流</title>
+    <link href="https://101.43.146.21/i-o-liu.html"/>
+    <id>https://101.43.146.21/i-o-liu.html</id>
+    <published>2023-02-05T05:06:04.000Z</published>
+    <updated>2023-02-05T08:02:46.851Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、全文概览&quot;&gt;&lt;a href=&quot;#一、全文概览&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Java" scheme="https://101.43.146.21/categories/Java/"/>
+    
+    
+      <category term="I/O" scheme="https://101.43.146.21/tags/I-O/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Linux指令笔记</title>
     <link href="https://101.43.146.21/linux-zhi-ling-bi-ji.html"/>
     <id>https://101.43.146.21/linux-zhi-ling-bi-ji.html</id>
     <published>2023-02-04T13:16:29.000Z</published>
-    <updated>2023-02-04T15:44:31.480Z</updated>
+    <updated>2023-02-05T05:05:10.565Z</updated>
     
     <summary type="html">
     
@@ -49,7 +117,7 @@
     <link href="https://101.43.146.21/autowired-zhu-ru-yuan-li.html"/>
     <id>https://101.43.146.21/autowired-zhu-ru-yuan-li.html</id>
     <published>2023-02-04T10:19:49.000Z</published>
-    <updated>2023-02-04T10:21:47.370Z</updated>
+    <updated>2023-02-05T05:04:25.701Z</updated>
     
     <summary type="html">
     
@@ -87,17 +155,29 @@
   </entry>
   
   <entry>
-    <title>八股文系列</title>
-    <link href="https://101.43.146.21/mian-jing-dao-hang.html"/>
-    <id>https://101.43.146.21/mian-jing-dao-hang.html</id>
+    <title>Java后端技术栈知识体系</title>
+    <link href="https://101.43.146.21/zhi-shi-ti-xi.html"/>
+    <id>https://101.43.146.21/zhi-shi-ti-xi.html</id>
     <published>2023-02-04T09:03:00.000Z</published>
-    <updated>2023-02-04T15:58:34.625Z</updated>
+    <updated>2023-02-05T05:14:10.485Z</updated>
     
     <summary type="html">
     
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;以下是我对Java后端技术栈体系做了一个汇总罗列，并在后续的职业生涯中逐步填充这些内容。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2023年规划&lt;ul&gt;
+&lt;li&gt;对Java语言知识点、Spring框架、Redis、Git、Maven、设计模式做系统梳理，并完善文
+        
+      
+    
     </summary>
     
-      <category term="Java八股" scheme="https://101.43.146.21/categories/Java%E5%85%AB%E8%82%A1/"/>
+      <category term="知识体系" scheme="https://101.43.146.21/categories/%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/"/>
     
     
       <category term="导航" scheme="https://101.43.146.21/tags/%E5%AF%BC%E8%88%AA/"/>
@@ -220,7 +300,7 @@
     <link href="https://101.43.146.21/lz4-ya-suo-suan-fa.html"/>
     <id>https://101.43.146.21/lz4-ya-suo-suan-fa.html</id>
     <published>2023-02-04T08:25:44.000Z</published>
-    <updated>2023-02-04T08:59:12.271Z</updated>
+    <updated>2023-02-05T05:05:16.289Z</updated>
     
     <summary type="html">
     
