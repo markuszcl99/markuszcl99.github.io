@@ -99,9 +99,23 @@
       <link href="/autowired-zhu-ru-yuan-li.html"/>
       <url>/autowired-zhu-ru-yuan-li.html</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h2 id="一、全文概览"><a href="#一、全文概览" class="headerlink" title="一、全文概览"></a>一、全文概览</h2><blockquote><p>依赖注入（DI）是Spring核心特性之一，而@Autowired也是我们日常高频使用的Spring依赖注入方式之一，因此有必要对它的使用以及原理做一个全面的掌握。本文从@Autowired使用、原理入手记录，并扩展延伸Spring中其他具备注入功能的注解。</p></blockquote><h2 id="二、-Autowired介绍与使用"><a href="#二、-Autowired介绍与使用" class="headerlink" title="二、@Autowired介绍与使用"></a>二、@Autowired介绍与使用</h2><p><img src="/autowired-zhu-ru-yuan-li/%E6%9C%AC%E6%96%87%E6%A6%82%E8%A7%88.png" alt></p><h2 id="三、-Autowired原理"><a href="#三、-Autowired原理" class="headerlink" title="三、@Autowired原理"></a>三、@Autowired原理</h2><h2 id="四、其他注解注入方式"><a href="#四、其他注解注入方式" class="headerlink" title="四、其他注解注入方式"></a>四、其他注解注入方式</h2><h2 id="五、全文总结"><a href="#五、全文总结" class="headerlink" title="五、全文总结"></a>五、全文总结</h2>]]></content>
       
       
+      <categories>
+          
+          <category> spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ioc </tag>
+            
+            <tag> 注解 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -226,9 +240,9 @@
       
         <tags>
             
-            <tag> aop </tag>
-            
             <tag> 注解 </tag>
+            
+            <tag> aop </tag>
             
         </tags>
       
