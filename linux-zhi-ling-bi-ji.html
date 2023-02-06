@@ -687,14 +687,14 @@ Linux命令非常的多，但大多数情况下我们不需要去死记硬背，
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.1k
+                    3.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    16 分
                 </div>
                 
                 
@@ -1073,9 +1073,70 @@ a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz<span aria-hidden="true" class=
 <h3 id="6、touch-选项-…-文件"><a href="#6、touch-选项-…-文件" class="headerlink" title="6、touch [选项]… 文件"></a>6、touch [选项]… 文件</h3><p>touch 即创建文件</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># touch touch_demo.txt</span>
 <span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
-a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt
-<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="六、通配符"><a href="#六、通配符" class="headerlink" title="六、通配符"></a>六、通配符</h2><h2 id="七、文本查看命令"><a href="#七、文本查看命令" class="headerlink" title="七、文本查看命令"></a>七、文本查看命令</h2><h2 id="八、打包与压缩命令"><a href="#八、打包与压缩命令" class="headerlink" title="八、打包与压缩命令"></a>八、打包与压缩命令</h2><h2 id="九、文本编辑器vim"><a href="#九、文本编辑器vim" class="headerlink" title="九、文本编辑器vim"></a>九、文本编辑器vim</h2><h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
+a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="六、通配符"><a href="#六、通配符" class="headerlink" title="六、通配符"></a>六、通配符</h2><blockquote>
+<p>用于操作文件，通常是有规律的文件</p>
+</blockquote>
+<ul>
+<li>* 匹配任何字符串</li>
+<li>? 匹配1个字符串</li>
+<li>[xyz] 匹配xyz任意一个字符</li>
+<li>[a-z] 匹配一个范围</li>
+<li>[!xyz] 或者 [^xyz] 不匹配xyz任何一个字符</li>
+</ul>
+<h2 id="七、文本查看命令"><a href="#七、文本查看命令" class="headerlink" title="七、文本查看命令"></a>七、文本查看命令</h2><h3 id="1、cat-选项-文件"><a href="#1、cat-选项-文件" class="headerlink" title="1、cat [选项] [文件]"></a>1、cat [选项] [文件]</h3><p>cat 即连接文件并在标准输出上输出</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># cat -n touch_demo.txt</span>
+     1    111111111111
+     2    222222222222
+     3    333333333333
+     4    444444444444
+     5    555555555555<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="2、head-选项-文件"><a href="#2、head-选项-文件" class="headerlink" title="2、head [选项] [文件]"></a>2、head [选项] [文件]</h3><p>head 即输出文件的开始部分</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># head -n 10 touch_demo.txt</span>
+111111111111
+222222222222
+333333333333
+444444444444
+555555555555111111111111
+222222222222
+333333333333
+444444444444
+555555555555111111111111
+222222222222
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># head -n 1 touch_demo.txt</span>
+111111111111<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3、tail-选项-文件"><a href="#3、tail-选项-文件" class="headerlink" title="3、tail [选项] [文件]"></a>3、tail [选项] [文件]</h3><p>tail 即输出文件的末尾部分</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># tail -10f touch_demo.txt</span>
+555555555555111111111111
+222222222222
+333333333333
+444444444444
+555555555555111111111111
+222222222222
+333333333333
+444444444444
+555555555555
+666666666666<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4、wc-选项-文件"><a href="#4、wc-选项-文件" class="headerlink" title="4、wc [选项] [文件]"></a>4、wc [选项] [文件]</h3><p>wc 即输出文件中的行数、单词数、字节数，常用选项：</p>
+<ul>
+<li>-c 输出字节统计数</li>
+<li>-l 输出换行符统计数</li>
+<li>-L 输出最长的行的行数</li>
+<li>-w 输出单词统计数</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 不带选项事，输出 顺序为 行数 单词数 字节统计数</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># wc touch_demo.txt</span>
+ 46  46 718 touch_demo.txt
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># wc -w touch_demo.txt</span>
+46 touch_demo.txt
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># wc -l touch_demo.txt</span>
+46 touch_demo.txt
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># wc -L touch_demo.txt</span>
+24 touch_demo.txt
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># wc -c touch_demo.txt</span>
+718 touch_demo.txt
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="5、more"><a href="#5、more" class="headerlink" title="5、more"></a>5、more</h3><h3 id="6、less"><a href="#6、less" class="headerlink" title="6、less"></a>6、less</h3><h2 id="八、打包与压缩命令"><a href="#八、打包与压缩命令" class="headerlink" title="八、打包与压缩命令"></a>八、打包与压缩命令</h2><h2 id="九、文本编辑器vim"><a href="#九、文本编辑器vim" class="headerlink" title="九、文本编辑器vim"></a>九、文本编辑器vim</h2><h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
             </div>
             <hr />
 
@@ -1809,7 +1870,7 @@ a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">30.7k
+            <span class="white-color">31k
              丨            
           
 
@@ -1897,7 +1958,7 @@ a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">30.7k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">31k</span>
     </div>
 </footer>
 
