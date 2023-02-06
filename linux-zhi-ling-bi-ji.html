@@ -528,7 +528,7 @@ Linux命令非常的多，但大多数情况下我们不需要去死记硬背，
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/25.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -687,14 +687,14 @@ Linux命令非常的多，但大多数情况下我们不需要去死记硬背，
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    3.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    14 分
                 </div>
                 
                 
@@ -937,8 +937,145 @@ drwxrwxrwx 5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1
 [root@VM-24-10-centos ~]# ls -rl
 总用量 1924
 -rw-r--r-- 1 root       root       1965336 12月 17 2010 manpages-zh-1.5.1.tar.gz
-drwxrwxrwx 5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1</code></pre><h3 id="5、ls-t"><a href="#5、ls-t" class="headerlink" title="5、ls -t"></a>5、ls -t</h3><p>按照时间顺序显示</p>
-<h2 id="四、cd命令"><a href="#四、cd命令" class="headerlink" title="四、cd命令"></a>四、cd命令</h2><h2 id="五、文件操作命令"><a href="#五、文件操作命令" class="headerlink" title="五、文件操作命令"></a>五、文件操作命令</h2><h2 id="六、通配符"><a href="#六、通配符" class="headerlink" title="六、通配符"></a>六、通配符</h2><h2 id="七、文本查看命令"><a href="#七、文本查看命令" class="headerlink" title="七、文本查看命令"></a>七、文本查看命令</h2><h2 id="八、打包与压缩命令"><a href="#八、打包与压缩命令" class="headerlink" title="八、打包与压缩命令"></a>八、打包与压缩命令</h2><h2 id="九、文本编辑器vim"><a href="#九、文本编辑器vim" class="headerlink" title="九、文本编辑器vim"></a>九、文本编辑器vim</h2><h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
+drwxrwxrwx 5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1</code></pre><h3 id="5、ls-t-path"><a href="#5、ls-t-path" class="headerlink" title="5、ls -t [path]"></a>5、ls -t [path]</h3><p>按照时间顺序显示（最后修改时间由近及远）</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls -lt</span>
+总用量 1948
+-rw-r--r--  1 root       root            81 2月   1 21:29 vim_demo1.txt
+drwxr-xr-x  2 root       root          4096 1月  30 22:46 a
+drwxr-xr-x  2 root       root          4096 1月  30 22:46 b
+drwxr-xr-x  2 root       root          4096 1月  30 22:46 c
+drwxr-xr-x  2 root       root          4096 1月  30 22:45 markus
+drwxrwxrwx  5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1
+drwxr-xr-x 95 root       root          4096 1月  29 22:21 etc
+-rw-r--r--  1 root       root       1965336 12月 17 2010 manpages-zh-1.5.1.tar.gz
+<span class="token comment" spellcheck="true"># 可以增加-r选项，按照时间顺序倒序显示（时间由远及近）</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls -lrt</span>
+总用量 1948
+-rw-r--r--  1 root       root       1965336 12月 17 2010 manpages-zh-1.5.1.tar.gz
+drwxr-xr-x 95 root       root          4096 1月  29 22:21 etc
+drwxrwxrwx  5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1
+drwxr-xr-x  2 root       root          4096 1月  30 22:45 markus
+drwxr-xr-x  2 root       root          4096 1月  30 22:46 c
+drwxr-xr-x  2 root       root          4096 1月  30 22:46 b
+drwxr-xr-x  2 root       root          4096 1月  30 22:46 a
+-rw-r--r--  1 root       root            81 2月   1 21:29 vim_demo1.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="6、ls-R-path"><a href="#6、ls-R-path" class="headerlink" title="6、ls -R [path]"></a>6、ls -R [path]</h3><p>递归展示当前目录下的所有目录下的所有文件</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls -R</span>
+.:
+b  c
+
+./b:
+d  e
+
+./b/d:
+
+./b/e:
+
+./c:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="四、cd命令详解"><a href="#四、cd命令详解" class="headerlink" title="四、cd命令详解"></a>四、cd命令详解</h2><blockquote>
+<p>cd 更改当前的操作目录</p>
+</blockquote>
+<ul>
+<li>cd /path/to/.. 绝对路径 根目录下开始</li>
+<li>cd ./path/to/.. 相对路径 当前目录下开始</li>
+<li>cd ../path/to/.. 相对路径 上级目录下开始</li>
+<li>cd path/to.. 相对目录 当前目录下开始</li>
+<li>cd - 切换到上一次操作的目录</li>
+</ul>
+<h2 id="五、文件操作命令"><a href="#五、文件操作命令" class="headerlink" title="五、文件操作命令"></a>五、文件操作命令</h2><h3 id="1、mkdir-选项-目录…"><a href="#1、mkdir-选项-目录…" class="headerlink" title="1、mkdir [选项] 目录…"></a>1、mkdir [选项] 目录…</h3><p>mkdir的功能是创建目录，我们先来看下常规使用</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># mkdir ~/a/a_mkdir</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># cd a</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
+a_mkdir  b  c
+<span class="token comment" spellcheck="true"># 创建多个目录</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># mkdir d e f g</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
+a_mkdir  b  c  d  e  f  g<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果我们想一次性创建多级目录，可通过 -p选项来支持，否则会提示<strong>没有文件或目录</strong>的错误</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># mkdir a/b/c/d/f/g</span>
+mkdir: 无法创建目录<span class="token string">"a/b/c/d/f/g"</span><span class="token keyword">:</span> 没有那个文件或目录
+<span class="token comment" spellcheck="true"># 增加 -p 选项</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># mkdir -p a/b/c/d/e/f/g</span>
+<span class="token comment" spellcheck="true"># 递归展示文件验证</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls -R a</span>
+a:
+a_mkdir  b  c
+
+a/a_mkdir:
+
+a/b:
+c  d  e
+
+a/b/c:
+d
+
+a/b/c/d:
+e
+
+a/b/c/d/e:
+f
+
+a/b/c/d/e/f:
+g
+
+a/b/c/d/e/f/g:
+
+a/b/d:
+
+a/b/e:
+
+a/c:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="2、rmdir-选项-目录…"><a href="#2、rmdir-选项-目录…" class="headerlink" title="2、rmdir [选项] 目录…"></a>2、rmdir [选项] 目录…</h3><p>rmdir 删除空目录，如果是非空目录会有操作失败的提示</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># rmdir b</span>
+rmdir: 删除 <span class="token string">"b"</span> 失败: 目录非空
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># rmdir g</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
+a_mkdir  b  c  d  e  f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3、rm-选项-…-文件…"><a href="#3、rm-选项-…-文件…" class="headerlink" title="3、rm [选项]… 文件…"></a>3、rm [选项]… 文件…</h3><p>rm 删除目录，通常有两个常用选项：</p>
+<ul>
+<li>-r 删除目录时会进行提示</li>
+<li>-r -f 删除目录不会进行提示，有点强制删除的意思，所以操作时要谨慎</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># rm -r b</span>
+rm：是否进入目录<span class="token string">"b"</span>? y
+rm：是否进入目录<span class="token string">"b/c"</span>? y
+rm：是否进入目录<span class="token string">"b/c/d"</span>? y
+rm：是否进入目录<span class="token string">"b/c/d/e"</span>? y
+rm：是否进入目录<span class="token string">"b/c/d/e/f"</span>? y
+rm：是否删除目录 <span class="token string">"b/c/d/e/f/g"</span>？y
+rm：是否删除目录 <span class="token string">"b/c/d/e/f"</span>？y
+rm：是否删除目录 <span class="token string">"b/c/d/e"</span>？y
+rm：是否删除目录 <span class="token string">"b/c/d"</span>？y
+rm：是否删除目录 <span class="token string">"b/c"</span>？y
+rm：是否删除目录 <span class="token string">"b/e"</span>？y
+rm：是否删除目录 <span class="token string">"b/d"</span>？y
+rm：是否删除目录 <span class="token string">"b"</span>？y
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># mkdir -p b/c/d/e/f/g</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># rm -rf b</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
+a_mkdir  c  d  e  f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4、cp-选项-…-源文件-目标文件"><a href="#4、cp-选项-…-源文件-目标文件" class="headerlink" title="4、cp [选项]… [源文件] [目标文件]"></a>4、cp [选项]… [源文件] [目标文件]</h3><p>cp 即为拷贝，常用选项如下所示：</p>
+<ul>
+<li>-r 递归复制目录及其子目录内的所有内容 </li>
+<li>-v 显示详细的进行步骤，也就是复制进度</li>
+<li>-p 保持指定的属性（默认：用户、所有权、时间戳）</li>
+<li>-a 等于-dR –preserve=all（保持默认属性以及新增的链接等所有权限，以及递归赋值目录）</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
+a  b  c  etc  manpages-zh-1.5.1  manpages-zh-1.5.1.tar.gz  markus  vim_demo1.txt
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># cp manpages-zh-1.5.1.tar.gz a/manpages_backup.tar.gz</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls a</span>
+a_mkdir  c  d  e  f  manpages_backup.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="5、mv-选项-…-源文件-目标文件"><a href="#5、mv-选项-…-源文件-目标文件" class="headerlink" title="5、mv [选项]… [源文件] [目标文件]"></a>5、mv [选项]… [源文件] [目标文件]</h3><p>mv 即移动，也为重命名</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># mv manpages_backup.tar.gz manpages_backup_mv.tar.gz</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
+a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="6、touch-选项-…-文件"><a href="#6、touch-选项-…-文件" class="headerlink" title="6、touch [选项]… 文件"></a>6、touch [选项]… 文件</h3><p>touch 即创建文件</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># touch touch_demo.txt</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
+a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt
+<span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="六、通配符"><a href="#六、通配符" class="headerlink" title="六、通配符"></a>六、通配符</h2><h2 id="七、文本查看命令"><a href="#七、文本查看命令" class="headerlink" title="七、文本查看命令"></a>七、文本查看命令</h2><h2 id="八、打包与压缩命令"><a href="#八、打包与压缩命令" class="headerlink" title="八、打包与压缩命令"></a>八、打包与压缩命令</h2><h2 id="九、文本编辑器vim"><a href="#九、文本编辑器vim" class="headerlink" title="九、文本编辑器vim"></a>九、文本编辑器vim</h2><h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
             </div>
             <hr />
 
@@ -1410,7 +1547,7 @@ drwxrwxrwx 5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1</cod
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="I/O流">
+                        <img src="/medias/featureimages/29.jpg" class="responsive-img" alt="I/O流">
                         
                         <span class="card-title">I/O流</span>
                     </div>
@@ -1460,7 +1597,7 @@ drwxrwxrwx 5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1</cod
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/42.jpg" class="responsive-img" alt="@Autowired注入原理">
+                        <img src="/medias/featureimages/41.jpg" class="responsive-img" alt="@Autowired注入原理">
                         
                         <span class="card-title">@Autowired注入原理</span>
                     </div>
@@ -1672,7 +1809,7 @@ drwxrwxrwx 5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1</cod
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">29.5k
+            <span class="white-color">30.7k
              丨            
           
 
@@ -1760,7 +1897,7 @@ drwxrwxrwx 5 lighthouse lighthouse    4096 1月  30 22:17 manpages-zh-1.5.1</cod
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">29.5k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">30.7k</span>
     </div>
 </footer>
 
