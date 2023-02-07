@@ -528,7 +528,7 @@ Linux命令非常的多，但大多数情况下我们不需要去死记硬背，
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -687,14 +687,14 @@ Linux命令非常的多，但大多数情况下我们不需要去死记硬背，
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    3.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    16 分
+                    17 分
                 </div>
                 
                 
@@ -1136,7 +1136,38 @@ a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt<span aria-hidd
 <span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># wc -c touch_demo.txt</span>
 718 touch_demo.txt
 <span class="token punctuation">[</span>root@VM-24-10-centos a<span class="token punctuation">]</span><span class="token comment" spellcheck="true">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="5、more"><a href="#5、more" class="headerlink" title="5、more"></a>5、more</h3><h3 id="6、less"><a href="#6、less" class="headerlink" title="6、less"></a>6、less</h3><h2 id="八、打包与压缩命令"><a href="#八、打包与压缩命令" class="headerlink" title="八、打包与压缩命令"></a>八、打包与压缩命令</h2><h2 id="九、文本编辑器vim"><a href="#九、文本编辑器vim" class="headerlink" title="九、文本编辑器vim"></a>九、文本编辑器vim</h2><h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
+<h3 id="5、more-选项-文件"><a href="#5、more-选项-文件" class="headerlink" title="5、more [选项] [文件]"></a>5、more [选项] [文件]</h3><p>more 命令类似 cat ，不过会以一页一页的形式显示，更方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b 键就会往回（back）一页显示，而且还有搜寻字串的功能（与 vi 相似）</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># +NUM -NUM </span>
+<span class="token punctuation">[</span>root@VM-24-10-centos etc<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># more +20 services</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># service-name  port/protocol  [aliases ...]   [# comment]</span>
+
+tcpmux          1/tcp                           <span class="token comment" spellcheck="true"># TCP port service multiplexer</span>
+tcpmux          1/udp                           <span class="token comment" spellcheck="true"># TCP port service multiplexer</span>
+rje             5/tcp                           <span class="token comment" spellcheck="true"># Remote Job Entry</span>
+rje             5/udp                           <span class="token comment" spellcheck="true"># Remote Job Entry</span>
+<span class="token keyword">echo</span>            7/tcp
+<span class="token keyword">echo</span>            7/udp
+discard         9/tcp           sink null
+discard         9/udp           sink null
+systat          11/tcp          <span class="token function">users</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>进入到more命令后，可以通过 num+enter来选择一下翻过多少行的操作</p>
+<h3 id="6、less-选项-文件"><a href="#6、less-选项-文件" class="headerlink" title="6、less [选项] [文件]"></a>6、less [选项] [文件]</h3><p>less 与more命令类似，它可以随意浏览文件，支持翻页和搜索，向上翻页和向下翻页，通常我是通过该命令查询日志中的某些异常信息，通过/匹配，然后通过n N向下向上搜索文本</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># less -N /etc/services</span>
+1 <span class="token comment" spellcheck="true"># /etc/services:</span>
+2 <span class="token comment" spellcheck="true"># $Id: services,v 1.55 2013/04/14 ovasik Exp $</span>
+3 <span class="token comment" spellcheck="true">#</span>
+4 <span class="token comment" spellcheck="true"># Network services, Internet style</span>
+5 <span class="token comment" spellcheck="true"># IANA services version: last updated 2013-04-10</span>
+6 <span class="token comment" spellcheck="true">#</span>
+7 <span class="token comment" spellcheck="true"># Note that it is presently the policy of IANA to assign a single well-known</span>
+8 <span class="token comment" spellcheck="true"># port number for both TCP and UDP; hence, most entries here have two entries</span>
+9 <span class="token comment" spellcheck="true"># even if the protocol doesn't support UDP operations.</span>
+10 <span class="token comment" spellcheck="true"># Updated from RFC 1700, ``Assigned Numbers'' (October 1994).  Not all ports</span>
+11 <span class="token comment" spellcheck="true"># are included, only the more common ones.</span>
+12 <span class="token comment" spellcheck="true">#</span>
+13 <span class="token comment" spellcheck="true"># The latest IANA port assignments can be gotten from</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="八、打包与压缩命令"><a href="#八、打包与压缩命令" class="headerlink" title="八、打包与压缩命令"></a>八、打包与压缩命令</h2><h2 id="九、文本编辑器vim"><a href="#九、文本编辑器vim" class="headerlink" title="九、文本编辑器vim"></a>九、文本编辑器vim</h2><h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
             </div>
             <hr />
 
@@ -1608,7 +1639,7 @@ a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt<span aria-hidd
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/29.jpg" class="responsive-img" alt="I/O流">
+                        <img src="/medias/featureimages/30.jpg" class="responsive-img" alt="I/O流">
                         
                         <span class="card-title">I/O流</span>
                     </div>
@@ -1658,7 +1689,7 @@ a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt<span aria-hidd
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/41.jpg" class="responsive-img" alt="@Autowired注入原理">
+                        <img src="/medias/featureimages/40.jpg" class="responsive-img" alt="@Autowired注入原理">
                         
                         <span class="card-title">@Autowired注入原理</span>
                     </div>
@@ -1870,7 +1901,7 @@ a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt<span aria-hidd
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">31k
+            <span class="white-color">31.4k
              丨            
           
 
@@ -1958,7 +1989,7 @@ a_mkdir  b  c  d  e  f  manpages_backup_mv.tar.gz  touch_demo.txt<span aria-hidd
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">31k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">31.4k</span>
     </div>
 </footer>
 
