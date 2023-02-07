@@ -687,14 +687,14 @@ Linux命令非常的多，但大多数情况下我们不需要去死记硬背，
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.8k
+                    4.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    17 分
+                    21 分
                 </div>
                 
                 
@@ -1167,7 +1167,96 @@ systat          11/tcp          <span class="token function">users</span><span a
 11 <span class="token comment" spellcheck="true"># are included, only the more common ones.</span>
 12 <span class="token comment" spellcheck="true">#</span>
 13 <span class="token comment" spellcheck="true"># The latest IANA port assignments can be gotten from</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="八、打包与压缩命令"><a href="#八、打包与压缩命令" class="headerlink" title="八、打包与压缩命令"></a>八、打包与压缩命令</h2><h2 id="九、文本编辑器vim"><a href="#九、文本编辑器vim" class="headerlink" title="九、文本编辑器vim"></a>九、文本编辑器vim</h2><h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
+<h2 id="八、打包与压缩命令"><a href="#八、打包与压缩命令" class="headerlink" title="八、打包与压缩命令"></a>八、打包与压缩命令</h2><ul>
+<li>tar 打包命令<ul>
+<li>c 执行打包，建立新的存档</li>
+<li>f 打包为文件</li>
+<li>z 结合gzip压缩指令 将指定文件(linux一切接文件)打包压缩为.tar.gz双拓展文件</li>
+<li>j 结合bzip2压缩指令 将指定文件打包压缩为.tar.bz2双拓展文件</li>
+<li>x 结合gizp或者bzip2解压缩指令，将压缩文件解压</li>
+<li>-C 指定路径解压</li>
+</ul>
+</li>
+<li>gzip bzip2 压缩与解压缩命令</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># tar czf /tmp/etc-backup.tar.gz /etc</span>
+tar: 从成员名中删除开头的“/”
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># tar cjf /tmp/etc-backup.tar.bz2 /etc</span>
+tar: 从成员名中删除开头的“/”
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># tar cf /tmp/etc-backup.tar /etc</span>
+tar: 从成员名中删除开头的“/”
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls -lh /tmp/etc-backup.tar*</span>
+-rw-r--r-- 1 root root  30M 1月  31 22:23 /tmp/etc-backup.tar
+-rw-r--r-- 1 root root 9.1M 1月  31 22:23 /tmp/etc-backup.tar.bz2
+-rw-r--r-- 1 root root  11M 1月  31 22:15 /tmp/etc-backup.tar.gz
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># tar xf /tmp/etc-backup.tar.bz2 -C /root</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls</span>
+a  b  c  etc  manpages-zh-1.5.1  manpages-zh-1.5.1.tar.gz  markus<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="九、文本编辑器vim"><a href="#九、文本编辑器vim" class="headerlink" title="九、文本编辑器vim"></a>九、文本编辑器vim</h2><blockquote>
+<p>vim命令有四种模式，分别为：</p>
+<ul>
+<li>正常模式</li>
+<li>插入模式</li>
+<li>命令模式</li>
+<li>可视模式</li>
+</ul>
+</blockquote>
+<h3 id="1、正常模式"><a href="#1、正常模式" class="headerlink" title="1、正常模式"></a>1、正常模式</h3><p>执行 vim 命令会进入正常模式，在正常模式下，经常会用到的快捷键如下：</p>
+<ul>
+<li>h 光标向左移动</li>
+<li>j 光标向下移动</li>
+<li>k 光标向上移动</li>
+<li>l 光标向右移动</li>
+<li>yy 复制当前行的数据</li>
+<li>y$ 复制当前光标到行尾的数据</li>
+<li>dd 剪切当前行的数据</li>
+<li>d$ 剪切当前光标到行尾的数据</li>
+<li>u 撤销（可多次执行）</li>
+<li>ctrl+r 重做（可多次执行）</li>
+<li>x 删除光标所在的元素</li>
+<li>r 替换光标所在的元素</li>
+<li>g 光标移至第一行开头位置</li>
+<li>G 光标移至最后一行开头位置</li>
+<li>num+G 光标移至指定行数的开头位置</li>
+<li>^ 行的开头</li>
+<li>$ 行的结尾</li>
+</ul>
+<h3 id="2、插入模式"><a href="#2、插入模式" class="headerlink" title="2、插入模式"></a>2、插入模式</h3><p>操作如下按键进入插入模式：</p>
+<ul>
+<li>i 进入插入模式，光标在当前位置</li>
+<li>I 进入插入模式，光标在当前行的开头位置</li>
+<li>a 进入插入模式，光标在当前位置的下一位</li>
+<li>A 进入插入模式，光标在当前行的结尾位置</li>
+<li>o 进入插入模式，在当前光标上面插入一行</li>
+<li>O 进入插入模式，在当前光标下面插入一行</li>
+</ul>
+<h3 id="3、命令模式"><a href="#3、命令模式" class="headerlink" title="3、命令模式"></a>3、命令模式</h3><p>操作 : 进入命令模式，常用命令如下：</p>
+<ul>
+<li>:set nu 显示文本行数<ul>
+<li>vim /etc/vimrc 设置指令 set nu 全局展示文件的行号</li>
+</ul>
+</li>
+<li>:set nonu 取消显示文本行数</li>
+<li>:set nohlsearch 取消文本高亮</li>
+<li>: w fileName 保存到指定路径下的文件（还可以通过vim file 后续编辑文件后进行 : w即可）</li>
+<li>: q 退出</li>
+<li>:!command 在文本编辑器中执行其他指令</li>
+<li>/x 搜索文本当中的x文本</li>
+<li>:s/old/new 替换光标所在行的第一个old文本到new文本</li>
+<li>:%s/old/new 替换光标所在行的old文本到new文本</li>
+<li>:%s/old/new/g 全局替换文本</li>
+<li>:3,5s/old/new 文本3-5行替换文本old到new</li>
+</ul>
+<h3 id="4、可视模式"><a href="#4、可视模式" class="headerlink" title="4、可视模式"></a>4、可视模式</h3><p>在正常模式下，操作如下按键进入可视模式：</p>
+<ul>
+<li>v 字符可视模式</li>
+<li>V 行可视模式</li>
+<li>ctrl+v 块可视模式<ul>
+<li>配合d和I(大写i)命令可以进行块的便利操作</li>
+</ul>
+</li>
+</ul>
+<h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
             </div>
             <hr />
 
@@ -1901,7 +1990,7 @@ systat          11/tcp          <span class="token function">users</span><span a
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">31.4k
+            <span class="white-color">32.3k
              丨            
           
 
@@ -1989,7 +2078,7 @@ systat          11/tcp          <span class="token function">users</span><span a
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">31.4k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">32.3k</span>
     </div>
 </footer>
 
