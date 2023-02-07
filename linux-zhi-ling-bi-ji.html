@@ -687,14 +687,14 @@ Linux命令非常的多，但大多数情况下我们不需要去死记硬背，
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.6k
+                    5.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    21 分
+                    24 分
                 </div>
                 
                 
@@ -1256,7 +1256,116 @@ a  b  c  etc  manpages-zh-1.5.1  manpages-zh-1.5.1.tar.gz  markus<span aria-hidd
 </ul>
 </li>
 </ul>
-<h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2>
+<h2 id="十、用户与权限管理命令"><a href="#十、用户与权限管理命令" class="headerlink" title="十、用户与权限管理命令"></a>十、用户与权限管理命令</h2><h3 id="1、用户管理常用命令"><a href="#1、用户管理常用命令" class="headerlink" title="1、用户管理常用命令"></a>1、用户管理常用命令</h3><ul>
+<li>useradd 新建用户(root用户才有权限)<ul>
+<li>cat /etc/password</li>
+<li>tail -10 /etc/shadow</li>
+<li>id user</li>
+<li>useradd -g gourp user</li>
+</ul>
+</li>
+<li>userdel 删除用户<ul>
+<li>userdel user 删除指定用户</li>
+<li>userdel -r user 删除指定用户及其用户目录</li>
+</ul>
+</li>
+<li>passwd 修改用户密码<ul>
+<li>passwd user设置密码</li>
+<li>passwd 更改当前用户的密码</li>
+</ul>
+</li>
+<li>usermod 修改用户属性<ul>
+<li>usermod -d path w</li>
+<li>usermod -g group user</li>
+</ul>
+</li>
+<li>chage 修改用户属性</li>
+</ul>
+<h3 id="2、组管理常用命令"><a href="#2、组管理常用命令" class="headerlink" title="2、组管理常用命令"></a>2、组管理常用命令</h3><ul>
+<li>groupadd 新建用户组</li>
+<li>groupdel 删除用户组</li>
+</ul>
+<h3 id="3、用户切换命令"><a href="#3、用户切换命令" class="headerlink" title="3、用户切换命令"></a>3、用户切换命令</h3><ul>
+<li>su 切换用户<ul>
+<li>su - user 表示切换到user用户下，- 起到的作用是切换过程中将环境一并切换</li>
+<li>su user 不完全切换</li>
+</ul>
+</li>
+<li>sudo 以其他用户身份执行命令<ul>
+<li>visudo 设置需要使用sudo的用户(组)</li>
+</ul>
+</li>
+</ul>
+<h3 id="4、用户配置文件"><a href="#4、用户配置文件" class="headerlink" title="4、用户配置文件"></a>4、用户配置文件</h3><blockquote>
+<p>vim /etc/passwd 用户配置文件</p>
+</blockquote>
+<pre class="line-numbers language-bash"><code class="language-bash">ntp:x:38:38::/etc/ntp:/sbin/nologin
+<span class="token comment" spellcheck="true"># /sbin/nologin 不允许当前用户登录终端</span>
+lighthouse:x:1000:1000::/home/lighthouse:/bin/bash
+用户名:登录是否需要密码:uid:gid:用户日志:家目录:用户的命令解释器<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>vim /etc/shadow 用户密码相关配置文件</p>
+</blockquote>
+<p>密码就不展示了</p>
+<blockquote>
+<p>vim /etc/group 用户组配置文件</p>
+</blockquote>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 用户组:是否需要密码登录:gid:其他组设置</span>
+lighthouse:x:1000:lighthouse
+mail:x:12:postfix<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="5、文件类型"><a href="#5、文件类型" class="headerlink" title="5、文件类型"></a>5、文件类型</h3><ul>
+<li>- 普通文件</li>
+<li>d 目录文件</li>
+<li>b 快特殊文件</li>
+<li>c 字符特殊文件</li>
+<li>| 符号链接</li>
+<li>f 命名管道</li>
+<li>s 套接字文件</li>
+</ul>
+<h3 id="5、文件权限"><a href="#5、文件权限" class="headerlink" title="5、文件权限"></a>5、文件权限</h3><ul>
+<li>r 表示可读</li>
+<li>w 表示可写</li>
+<li>x 表示可执行</li>
+<li>r=4</li>
+<li>w=2</li>
+<li>x=1</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 第一个字符 表示文件类型</span>
+<span class="token comment" spellcheck="true"># 第2-10个字符 三个为一组 分别为文件属主的权限、文件属组权限、其他用户权限</span>
+-rw-r--r--  1 root       root            81 2月   1 21:29 vim_demo1.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>创建新文件有默认权限，根据umask值计算，属主和属组根据当前进程的用户来设定 &lt;666-umask = 默认权限&gt;</p>
+<h3 id="7、目录权限"><a href="#7、目录权限" class="headerlink" title="7、目录权限"></a>7、目录权限</h3><ul>
+<li>x 表示进入目录</li>
+<li>rx 显示目录内的文件名</li>
+<li>wx 修改目录内的文件名</li>
+</ul>
+<h3 id="8、修改权限"><a href="#8、修改权限" class="headerlink" title="8、修改权限"></a>8、修改权限</h3><ul>
+<li>chmod 可以修改、目录权限<ul>
+<li>u 给属主修改权限</li>
+<li>g 给属组修改权限</li>
+<li>o 给其他用户修改权限</li>
+<li>+ 增加权限</li>
+<li>- 删除权限</li>
+<li>= 替换权限</li>
+<li>还可以利用数字修改权限，4 2 1 代表 r w x<ul>
+<li>例如 chmod 777 xxx</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>chown 更改属主、属组</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@VM-24-10-centos test<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls -l</span>
+总用量 0
+-rw-r--r-- 1 root root 0 2月   7 22:52 aFile
+<span class="token punctuation">[</span>root@VM-24-10-centos test<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># chown user1:group1 aFile</span>
+<span class="token punctuation">[</span>root@VM-24-10-centos test<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># ls -l</span>
+总用量 0
+-rw-r--r-- 1 user1 group1 0 2月   7 22:52 aFile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>chgrp 可以单独更改属组，但是不常用</li>
+</ul>
+
             </div>
             <hr />
 
@@ -1990,7 +2099,7 @@ a  b  c  etc  manpages-zh-1.5.1  manpages-zh-1.5.1.tar.gz  markus<span aria-hidd
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">32.3k
+            <span class="white-color">33k
              丨            
           
 
@@ -2078,7 +2187,7 @@ a  b  c  etc  manpages-zh-1.5.1  manpages-zh-1.5.1.tar.gz  markus<span aria-hidd
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">32.3k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">33k</span>
     </div>
 </footer>
 
