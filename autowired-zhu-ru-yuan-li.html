@@ -681,14 +681,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    6 分
                 </div>
                 
                 
@@ -875,8 +875,31 @@
 <p>那么@Autowired到底发生在哪个阶段呢？我们接下来再来分析下BeanFactory#getBean的内部大致流程！</p>
 <p><img src="/autowired-zhu-ru-yuan-li/Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F-doGetBean.jpg" alt="Bean生命周期-doGetBean"></p>
 <p>上图中标红的备注中正是@Autowired发挥作用的环节。Bean生命周期后续会单独写一篇文章，这里就不做展开了，我们把关注点聚焦到@Autowired实现细节上去！</p>
-<h3 id="2、-Autowired实现细节"><a href="#2、-Autowired实现细节" class="headerlink" title="2、@Autowired实现细节"></a>2、@Autowired实现细节</h3><p>通过Bean生命周期概览，我们可以知道@Autowired是在Bean属性赋值阶段将依赖Bean注入到当前Bean字段中的，实现类是AutowiredAnnotationBeanPostProcessor,我们先来了解下它的继承结构并解释它的相关功能</p>
+<h3 id="2、-Autowired实现细节"><a href="#2、-Autowired实现细节" class="headerlink" title="2、@Autowired实现细节"></a>2、@Autowired实现细节</h3><blockquote>
+<p>通过Bean生命周期概览，我们可以知道如果想要挖掘@Autowired实现的原理，我们先要去了解两个类：</p>
+<ul>
+<li>AbstractAutowiredCapableBeanFactory</li>
+<li>AutowiredAnnotationBeanPostProcessor</li>
+</ul>
+</blockquote>
+<h4 id="1、AbstractAutowiredCapableBeanFactory"><a href="#1、AbstractAutowiredCapableBeanFactory" class="headerlink" title="1、AbstractAutowiredCapableBeanFactory"></a>1、AbstractAutowiredCapableBeanFactory</h4><p>首先</p>
+<h4 id="2、AutowiredAnnotationBeanPostProcessor"><a href="#2、AutowiredAnnotationBeanPostProcessor" class="headerlink" title="2、AutowiredAnnotationBeanPostProcessor"></a>2、AutowiredAnnotationBeanPostProcessor</h4><p>通过Bean生命周期概览，我们可以知道@Autowired是在Bean属性赋值阶段将依赖Bean注入到当前Bean字段中的，实现类是AutowiredAnnotationBeanPostProcessor,我们先来了解下它的继承结构并解释它的相关功能</p>
 <p><img src="/autowired-zhu-ru-yuan-li/AutowiredAnnotationBeanPostProcessor%E7%B1%BB%E5%9B%BE.jpg" alt="AutowiredAnnotationBeanPostProcessor类图"></p>
+<p>看到上图的继承结构可以发现其实AutowiredAnnotationBeanPostProcessor具备两方面的功能，一方面是InstantiationAwareBeanPostProcessor在Bean实例化前后以及属性赋值前做些扩展；另一方面是在合并BeanDefinition后做些扩展，所谓“合并BeanDefinition”就是将配置的子BeanDefinition和父BeanDefinition合并形成当前Bean的最终BeanDefinition配置元信息，这里给大家举个具体例子：</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!--一个独立的BeanDefinition，它在Spring中为 GenericBeanDefinition--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user,user2<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.markus.spring.ioc.container.domain.User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>markus<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>23<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>city<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>BEIJING<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>workCities<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>BEIJING,HEZE<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lifeCities<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>BEIJING,HEZE<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>resource<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>classpath:/META-INF/user-config.properties<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+<span class="token comment" spellcheck="true">&lt;!--一个独立的BeanDefinition，它在Spring中为 GenericBeanDefinition--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>superUser<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.markus.spring.ioc.container.domain.SuperUser<span class="token punctuation">"</span></span> <span class="token attr-name">parent</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span> <span class="token attr-name">primary</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>address<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>北京市朝阳区<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+<span class="token comment" spellcheck="true">&lt;!-- 比如在获取superUser时，则会向上找父类user 便会将两个GenericBeanDefinition合并为RootBeanDefinition 这个过程便称为合并BeanDefinition阶段--></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="四、其他注解注入方式"><a href="#四、其他注解注入方式" class="headerlink" title="四、其他注解注入方式"></a>四、其他注解注入方式</h2><h2 id="五、全文总结"><a href="#五、全文总结" class="headerlink" title="五、全文总结"></a>五、全文总结</h2>
             </div>
             <hr />
@@ -1613,7 +1636,7 @@
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">33.6k
+            <span class="white-color">33.9k
              丨            
           
 
@@ -1701,7 +1724,7 @@
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">33.6k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">33.9k</span>
     </div>
 </footer>
 
