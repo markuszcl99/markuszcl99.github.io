@@ -522,7 +522,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/37.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/36.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -681,14 +681,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    605
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    5 分
                 </div>
                 
                 
@@ -727,7 +727,10 @@
 
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>通过上面代码我们可以看出@Autowired可以标注在构造器、方法、参数、字段以及派生注解上，所以注入时机非常多，可以准确的控制在何时、何处注入以及如何注入。</p>
-<h3 id="2、使用"><a href="#2、使用" class="headerlink" title="2、使用"></a>2、使用</h3><p><strong>Bean配置类</strong></p>
+<h3 id="2、使用"><a href="#2、使用" class="headerlink" title="2、使用"></a>2、使用</h3><blockquote>
+<p>我们先来学习下关于@Autowired的使用方式：</p>
+</blockquote>
+<p><strong>Bean配置类</strong></p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanConfiguration</span> <span class="token punctuation">{</span>
 
     <span class="token annotation punctuation">@Bean</span>
@@ -807,7 +810,74 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>控制台结果</strong></p>
 <p><img src="/autowired-zhu-ru-yuan-li/AutowiredAnnotationDependencyInjectionDemo.jpg" alt="AutowiredAnnotationDependencyInjectionDemo.class"></p>
-<h2 id="三、-Autowired原理"><a href="#三、-Autowired原理" class="headerlink" title="三、@Autowired原理"></a>三、@Autowired原理</h2><h2 id="四、其他注解注入方式"><a href="#四、其他注解注入方式" class="headerlink" title="四、其他注解注入方式"></a>四、其他注解注入方式</h2><h2 id="五、全文总结"><a href="#五、全文总结" class="headerlink" title="五、全文总结"></a>五、全文总结</h2>
+<p>当Spring容器中有多个相同类型的Bean时，它还可以与@Qualifier配合使用来指定某一特定的Bean</p>
+<p><strong>Bean配置</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/11 4:49 PM
+ * @Description: 相同类型多个Bean配置
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SameTypeBeanConfiguration</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> User <span class="token function">user1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token string">"markus"</span><span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> User <span class="token function">user2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token string">"Luna"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>演示类</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>spring<span class="token punctuation">.</span>injection<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>spring<span class="token punctuation">.</span>bean<span class="token punctuation">.</span>User<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Autowired<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Qualifier<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>AnnotationConfigApplicationContext<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Import<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/11 4:47 PM
+ * @Description:
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>spring<span class="token punctuation">.</span>configuration<span class="token punctuation">.</span>SameTypeBeanConfiguration<span class="token punctuation">.</span><span class="token keyword">class</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">QualifierAnnotationUseDemo</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"user1"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> User user<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        AnnotationConfigApplicationContext context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        context<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>QualifierAnnotationUseDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        context<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        QualifierAnnotationUseDemo demo <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>QualifierAnnotationUseDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"demo.user : "</span> <span class="token operator">+</span> demo<span class="token punctuation">.</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        context<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>控制台</strong></p>
+<img src="/autowired-zhu-ru-yuan-li/QualifierAnnotationUseDemo.jpg">
+
+<h2 id="三、-Autowired原理"><a href="#三、-Autowired原理" class="headerlink" title="三、@Autowired原理"></a>三、@Autowired原理</h2><h3 id="1、Bean的生命周期"><a href="#1、Bean的生命周期" class="headerlink" title="1、Bean的生命周期"></a>1、Bean的生命周期</h3><p>在讲解@Autowired原理之前，有必要先提及一下Bean的生命周期，但在这里不做过多叙述，只是让大家有个大致的认识，以及@Autowired在哪里开始发挥作用的。</p>
+<p><img src="/autowired-zhu-ru-yuan-li/Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.jpg" alt="Bean生命周期"></p>
+<p>上图为Spring Bean的整个的一个生命周期，包括定义Bean配置信息、加载解析并注册Bean元信息，在我们程序运行时getBean获取Spring Bean又会经过Bean的实例化、属性赋值、初始化等环节，在这些环节前后，Spring也给了我们一些扩展机会，例如实例化前后、属性赋值前、初始化前、初始化后。因为Spring 单例Bean的生命周期是交给容器去管理的，所以Bean的销毁最后也依赖于容器的销毁，当容器发出销毁消息时，会触发Bean的销毁逻辑，这是我们也可以在Bean销毁前做一些自定义操作。至此就是关于Spring Bean生命周期的一个大体介绍。</p>
+<p>那么@Autowired到底发生在哪个阶段呢？我们接下来再来分析下BeanFactory#getBean的内部大致流程！</p>
+<p><img src="/autowired-zhu-ru-yuan-li/Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F-doGetBean.jpg" alt="Bean生命周期-doGetBean"></p>
+<p>上图中标红的备注中正是@Autowired发挥作用的环节。Bean生命周期后续会单独写一篇文章，这里就不做展开了，我们把关注点聚焦到@Autowired实现细节上去！</p>
+<h3 id="2、-Autowired实现细节"><a href="#2、-Autowired实现细节" class="headerlink" title="2、@Autowired实现细节"></a>2、@Autowired实现细节</h3><p>通过Bean生命周期概览，我们可以知道@Autowired是在Bean属性赋值阶段将依赖Bean注入到当前Bean字段中的，实现类是AutowiredAnnotationBeanPostProcessor,我们先来了解下它的继承结构并解释它的相关功能</p>
+<p><img src="/autowired-zhu-ru-yuan-li/AutowiredAnnotationBeanPostProcessor%E7%B1%BB%E5%9B%BE.jpg" alt="AutowiredAnnotationBeanPostProcessor类图"></p>
+<h2 id="四、其他注解注入方式"><a href="#四、其他注解注入方式" class="headerlink" title="四、其他注解注入方式"></a>四、其他注解注入方式</h2><h2 id="五、全文总结"><a href="#五、全文总结" class="headerlink" title="五、全文总结"></a>五、全文总结</h2>
             </div>
             <hr />
 
@@ -1279,7 +1349,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/30.jpg" class="responsive-img" alt="Linux指令笔记">
+                        <img src="/medias/featureimages/31.jpg" class="responsive-img" alt="Linux指令笔记">
                         
                         <span class="card-title">Linux指令笔记</span>
                     </div>
@@ -1332,7 +1402,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="ReentrantLock与AQS的源码学习笔记">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="ReentrantLock与AQS的源码学习笔记">
                         
                         <span class="card-title">ReentrantLock与AQS的源码学习笔记</span>
                     </div>
@@ -1543,7 +1613,7 @@
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">33k
+            <span class="white-color">33.6k
              丨            
           
 
@@ -1631,7 +1701,7 @@
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">33k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">33.6k</span>
     </div>
 </footer>
 
