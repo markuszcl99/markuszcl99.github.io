@@ -522,7 +522,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -677,14 +677,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    3.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    20 分
                 </div>
                 
                 
@@ -987,7 +987,426 @@
  * (11)nonexistent
  * java.nio.file.NoSuchFileException: nonexistent
  */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="4、Path监听"><a href="#4、Path监听" class="headerlink" title="4、Path监听"></a>4、Path监听</h3><h2 id="三、组件二：File（文件）"><a href="#三、组件二：File（文件）" class="headerlink" title="三、组件二：File（文件）"></a>三、组件二：File（文件）</h2><h2 id="四、全文总结"><a href="#四、全文总结" class="headerlink" title="四、全文总结"></a>四、全文总结</h2>
+<h3 id="4、删除目录"><a href="#4、删除目录" class="headerlink" title="4、删除目录"></a>4、删除目录</h3><p>Files工具类包含了操作目录和文件所需要的大部分操作，但其中缺乏删除目录树的工具方法，这里我们做个删除目录树工具的练习</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>FileVisitResult<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Files<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Path<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>SimpleFileVisitor<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>attribute<span class="token punctuation">.</span>BasicFileAttributes<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author: zhangchenglong06
+ * @Date: 2023/2/9
+ * @Description:
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RmDir</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">rmdir</span><span class="token punctuation">(</span>Path dir<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    Files<span class="token punctuation">.</span><span class="token function">walkFileTree</span><span class="token punctuation">(</span>dir<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SimpleFileVisitor</span><span class="token operator">&lt;</span>Path<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">/**
+       * 在这个目录下的每个文件上运行
+       * @param file
+       * @param attrs
+       * @return
+       * @throws IOException
+       */</span>
+      <span class="token annotation punctuation">@Override</span>
+      <span class="token keyword">public</span> FileVisitResult <span class="token function">visitFile</span><span class="token punctuation">(</span>Path file<span class="token punctuation">,</span> BasicFileAttributes attrs<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        Files<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> FileVisitResult<span class="token punctuation">.</span>CONTINUE<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment" spellcheck="true">/**
+       * 先进入当前目录下的文件和目录(包括所有的子目录)，最后在当前目录上运行
+       * @param dir
+       * @param exc
+       * @return
+       * @throws IOException
+       */</span>
+      <span class="token annotation punctuation">@Override</span>
+      <span class="token keyword">public</span> FileVisitResult <span class="token function">postVisitDirectory</span><span class="token punctuation">(</span>Path dir<span class="token punctuation">,</span> IOException exc<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        Files<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>dir<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> FileVisitResult<span class="token punctuation">.</span>CONTINUE<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+
+      <span class="token comment" spellcheck="true">/**
+       * 先在当前目录上运行，然后进入这个目录下的文件和目录
+       * @param dir
+       * @param attrs
+       * @return
+       * @throws IOException
+       */</span>
+      <span class="token annotation punctuation">@Override</span>
+      <span class="token keyword">public</span> FileVisitResult <span class="token function">preVisitDirectory</span><span class="token punctuation">(</span>Path dir<span class="token punctuation">,</span> BasicFileAttributes attrs<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">preVisitDirectory</span><span class="token punctuation">(</span>dir<span class="token punctuation">,</span> attrs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment" spellcheck="true">/**
+       * 当文件无法访问时调用
+       * @param file
+       * @param exc
+       * @return
+       * @throws IOException
+       */</span>
+      <span class="token annotation punctuation">@Override</span>
+      <span class="token keyword">public</span> FileVisitResult <span class="token function">visitFileFailed</span><span class="token punctuation">(</span>Path file<span class="token punctuation">,</span> IOException exc<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">visitFileFailed</span><span class="token punctuation">(</span>file<span class="token punctuation">,</span> exc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下面来检验下删除工具的有效性</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>FileSystems<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Files<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Path<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Paths<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Collections<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token keyword">static</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">.</span>constant<span class="token punctuation">.</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH<span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">/**
+ * @Author: zhangchenglong06
+ * @Date: 2023/2/9
+ * @Description:
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Directories</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> Path test <span class="token operator">=</span> Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">static</span> String sep <span class="token operator">=</span> FileSystems<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getSeparator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">static</span> List<span class="token operator">&lt;</span>String<span class="token operator">></span> parts <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">,</span> <span class="token string">"bar"</span><span class="token punctuation">,</span> <span class="token string">"baz"</span><span class="token punctuation">,</span> <span class="token string">"bag"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">static</span> Path <span class="token function">makeVariant</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 移动指定列表的元素 distance 位</span>
+    <span class="token comment" spellcheck="true">// 例如 [1, 2, 3, 4, 5] 执行Collections.rotate(list.subList(1,4),1)</span>
+    <span class="token comment" spellcheck="true">// 结果 [1, 4, 3, 4, 5]</span>
+    Collections<span class="token punctuation">.</span><span class="token function">rotate</span><span class="token punctuation">(</span>parts<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">,</span> String<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>sep<span class="token punctuation">,</span> parts<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">refreshTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 如果文件存在则删除，否则创建目录</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Files<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      RmDir<span class="token punctuation">.</span><span class="token function">rmdir</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>Files<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      Files<span class="token punctuation">.</span><span class="token function">createDirectory</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">populateTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> parts<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      Path variant <span class="token operator">=</span> <span class="token function">makeVariant</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>Files<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span>variant<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Files<span class="token punctuation">.</span><span class="token function">createDirectories</span><span class="token punctuation">(</span>variant<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Files<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"Directories.java"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> variant<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"File"</span> <span class="token operator">+</span> i <span class="token operator">+</span> <span class="token string">".txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Files<span class="token punctuation">.</span><span class="token function">createTempFile</span><span class="token punctuation">(</span>variant<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 刷新测试目录</span>
+    <span class="token function">refreshTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 在test路径下增加Hello.txt文件路径 并创建此路径文件</span>
+    Files<span class="token punctuation">.</span><span class="token function">createFile</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"Hello.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 创建文件</span>
+    Path variant <span class="token operator">=</span> <span class="token function">makeVariant</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">// 创建一级目录的函数，当创建多级目录时会抛出文件不存在的异常</span>
+      Files<span class="token punctuation">.</span><span class="token function">createDirectory</span><span class="token punctuation">(</span>variant<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Nope, that doesn't work."</span> <span class="token operator">+</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">populateTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Path tempDir <span class="token operator">=</span> Files<span class="token punctuation">.</span><span class="token function">createTempDirectory</span><span class="token punctuation">(</span>test<span class="token punctuation">,</span> <span class="token string">"DIR_"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Files<span class="token punctuation">.</span><span class="token function">createTempFile</span><span class="token punctuation">(</span>tempDir<span class="token punctuation">,</span> <span class="token string">"pre"</span><span class="token punctuation">,</span> <span class="token string">".non"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// newDirectoryStream 只显示指定目录下的子目录或文件</span>
+    Files<span class="token punctuation">.</span><span class="token function">newDirectoryStream</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"********************"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// walk 可以浏览指定目录下的所有内容（目录树）</span>
+    Files<span class="token punctuation">.</span><span class="token function">walk</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 控制台
+ * Nope, that doesn't work.java.nio.file.NoSuchFileException: io/src/main/java/com/markus/java/file/test/bag/foo/bar/baz
+ * io/src/main/java/com/markus/java/file/test/DIR_260744175083605522
+ * io/src/main/java/com/markus/java/file/test/foo
+ * io/src/main/java/com/markus/java/file/test/baz
+ * io/src/main/java/com/markus/java/file/test/bar
+ * io/src/main/java/com/markus/java/file/test/bag
+ * io/src/main/java/com/markus/java/file/test/Hello.txt
+ * ********************
+ * io/src/main/java/com/markus/java/file/test
+ * io/src/main/java/com/markus/java/file/test/DIR_260744175083605522
+ * io/src/main/java/com/markus/java/file/test/DIR_260744175083605522/pre7111318949801779914.non
+ * io/src/main/java/com/markus/java/file/test/foo
+ * io/src/main/java/com/markus/java/file/test/foo/bar
+ * io/src/main/java/com/markus/java/file/test/foo/bar/baz
+ * io/src/main/java/com/markus/java/file/test/foo/bar/baz/bag
+ * io/src/main/java/com/markus/java/file/test/foo/bar/baz/bag/File2.txt
+ * io/src/main/java/com/markus/java/file/test/foo/bar/baz/bag/2694156263661518806.tmp
+ * io/src/main/java/com/markus/java/file/test/baz
+ * io/src/main/java/com/markus/java/file/test/baz/bag
+ * io/src/main/java/com/markus/java/file/test/baz/bag/foo
+ * io/src/main/java/com/markus/java/file/test/baz/bag/foo/bar
+ * io/src/main/java/com/markus/java/file/test/baz/bag/foo/bar/File0.txt
+ * io/src/main/java/com/markus/java/file/test/baz/bag/foo/bar/6305328343447758907.tmp
+ * io/src/main/java/com/markus/java/file/test/bar
+ * io/src/main/java/com/markus/java/file/test/bar/baz
+ * io/src/main/java/com/markus/java/file/test/bar/baz/bag
+ * io/src/main/java/com/markus/java/file/test/bar/baz/bag/foo
+ * io/src/main/java/com/markus/java/file/test/bar/baz/bag/foo/File1.txt
+ * io/src/main/java/com/markus/java/file/test/bar/baz/bag/foo/5478658539929705751.tmp
+ * io/src/main/java/com/markus/java/file/test/bag
+ * io/src/main/java/com/markus/java/file/test/bag/foo
+ * io/src/main/java/com/markus/java/file/test/bag/foo/bar
+ * io/src/main/java/com/markus/java/file/test/bag/foo/bar/baz
+ * io/src/main/java/com/markus/java/file/test/bag/foo/bar/baz/File3.txt
+ * io/src/main/java/com/markus/java/file/test/bag/foo/bar/baz/5014150493260271159.tmp
+ * io/src/main/java/com/markus/java/file/test/Hello.txt
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="5、Path监听和查找"><a href="#5、Path监听和查找" class="headerlink" title="5、Path监听和查找"></a>5、Path监听和查找</h3><p>FileSystems（文件系统）可以获得两个的API：</p>
+<ul>
+<li>WatchService: 监听Path</li>
+<li>TreeMatcher: 查找Path</li>
+</ul>
+<p>下面我们看下代码示例：</p>
+<ul>
+<li>WatchService</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">.</span>constant<span class="token punctuation">.</span>FileConstant<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>Executors<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>TimeUnit<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token keyword">static</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>StandardWatchEventKinds<span class="token punctuation">.</span>ENTRY_DELETE<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author: zhangchenglong06
+ * @Date: 2023/2/10
+ * @Description:
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PathWatcher</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> Path test <span class="token operator">=</span> Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">delTxtFiles</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      Files<span class="token punctuation">.</span><span class="token function">walk</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>
+              f <span class="token operator">-</span><span class="token operator">></span> f<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">endsWith</span><span class="token punctuation">(</span><span class="token string">".txt"</span><span class="token punctuation">)</span>
+          <span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>
+          f <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"deleting "</span> <span class="token operator">+</span> f<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+              Files<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 刷新目录</span>
+    Directories<span class="token punctuation">.</span><span class="token function">refreshTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 创建目录下的文件</span>
+    Directories<span class="token punctuation">.</span><span class="token function">populateTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Files<span class="token punctuation">.</span><span class="token function">createFile</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"Hello.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    WatchService watcher <span class="token operator">=</span> FileSystems<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newWatchService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 只能监听到当前目录下操作，子目录下的文件操作不会被监听到</span>
+    test<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>watcher<span class="token punctuation">,</span> ENTRY_DELETE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Executors<span class="token punctuation">.</span><span class="token function">newSingleThreadScheduledExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span>PathWatcher<span class="token operator">:</span><span class="token operator">:</span>delTxtFiles<span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    WatchKey key <span class="token operator">=</span> watcher<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>WatchEvent<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> evt <span class="token operator">:</span> key<span class="token punctuation">.</span><span class="token function">pollEvents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"evt.context(): "</span> <span class="token operator">+</span> evt<span class="token punctuation">.</span><span class="token function">context</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+          <span class="token string">"\nevt.count(): "</span> <span class="token operator">+</span> evt<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+          <span class="token string">"\nevt.kind(): "</span> <span class="token operator">+</span> evt<span class="token punctuation">.</span><span class="token function">kind</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      System<span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 控制台
+ * deleting io/src/main/java/com/markus/java/file/test/foo/bar/baz/bag/File3.txt
+ * deleting io/src/main/java/com/markus/java/file/test/baz/bag/foo/bar/File1.txt
+ * deleting io/src/main/java/com/markus/java/file/test/bar/baz/bag/foo/File2.txt
+ * deleting io/src/main/java/com/markus/java/file/test/bag/foo/bar/baz/File0.txt
+ * deleting io/src/main/java/com/markus/java/file/test/Hello.txt
+ * evt.context(): Hello.txt
+ * evt.count(): 1
+ * evt.kind(): ENTRY_DELETE
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上面的代码会有个缺陷，就是它只能监听到当前目录的操作，而无法查找当前目录下所有的子目录的操作行为，如果想监听整个目录树，则必须在整个树的每个子目录上设置一个WatchService</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">.</span>constant<span class="token punctuation">.</span>FileConstant<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>Executors<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token keyword">static</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>StandardWatchEventKinds<span class="token punctuation">.</span>ENTRY_DELETE<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author: zhangchenglong06
+ * @Date: 2023/2/10
+ * @Description:
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TreeWatcher</span> <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">watchDir</span><span class="token punctuation">(</span>Path dir<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            WatchService watcher <span class="token operator">=</span> FileSystems<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newWatchService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            dir<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>watcher<span class="token punctuation">,</span> ENTRY_DELETE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Executors<span class="token punctuation">.</span><span class="token function">newSingleThreadScheduledExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                    WatchKey key <span class="token operator">=</span> watcher<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span>WatchEvent<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> evt <span class="token operator">:</span> key<span class="token punctuation">.</span><span class="token function">pollEvents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"evt.context(): "</span> <span class="token operator">+</span> evt<span class="token punctuation">.</span><span class="token function">context</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+                                <span class="token string">"\nevt.count(): "</span> <span class="token operator">+</span> evt<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+                                <span class="token string">"\nevt.kind(): "</span> <span class="token operator">+</span> evt<span class="token punctuation">.</span><span class="token function">kind</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        System<span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">return</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        Directories<span class="token punctuation">.</span><span class="token function">refreshTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Directories<span class="token punctuation">.</span><span class="token function">populateTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Files<span class="token punctuation">.</span><span class="token function">walk</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>Files<span class="token operator">:</span><span class="token operator">:</span>isDirectory<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>TreeWatcher<span class="token operator">:</span><span class="token operator">:</span>watchDir<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        PathWatcher<span class="token punctuation">.</span><span class="token function">delTxtFiles</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 控制台
+ * deleting io/src/main/java/com/markus/java/file/test/foo/bar/baz/bag/File3.txt
+ * deleting io/src/main/java/com/markus/java/file/test/baz/bag/foo/bar/File1.txt
+ * deleting io/src/main/java/com/markus/java/file/test/bar/baz/bag/foo/File2.txt
+ * deleting io/src/main/java/com/markus/java/file/test/bag/foo/bar/baz/File0.txt
+ * evt.context(): File1.txt
+ * evt.count(): 1
+ * evt.kind(): ENTRY_DELETE
+ * evt.context(): File0.txt
+ * evt.count(): 1
+ * evt.kind(): ENTRY_DELETE
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>PathMatcher</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">.</span>constant<span class="token punctuation">.</span>FileConstant<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author: zhangchenglong06
+ * @Date: 2023/2/10
+ * @Description:
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Find</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    Path test <span class="token operator">=</span> Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Directories<span class="token punctuation">.</span><span class="token function">refreshTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Directories<span class="token punctuation">.</span><span class="token function">populateTestDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Files<span class="token punctuation">.</span><span class="token function">createDirectory</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"dir.tmp"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    PathMatcher matcher <span class="token operator">=</span> FileSystems<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">getPathMatcher</span><span class="token punctuation">(</span><span class="token string">"glob:**/*.{tmp,txt}"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Files<span class="token punctuation">.</span><span class="token function">walk</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>matcher<span class="token operator">:</span><span class="token operator">:</span>matches<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"*******************"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    PathMatcher matcher2 <span class="token operator">=</span> FileSystems<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">getPathMatcher</span><span class="token punctuation">(</span><span class="token string">"glob:*.tmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Files<span class="token punctuation">.</span><span class="token function">walk</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>Path<span class="token operator">:</span><span class="token operator">:</span>getFileName<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>matcher2<span class="token operator">:</span><span class="token operator">:</span>matches<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"*******************"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Files<span class="token punctuation">.</span><span class="token function">walk</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>Files<span class="token operator">:</span><span class="token operator">:</span>isRegularFile<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>Path<span class="token operator">:</span><span class="token operator">:</span>getFileName<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>matcher2<span class="token operator">:</span><span class="token operator">:</span>matches<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">/</span><span class="token operator">*</span><span class="token operator">*</span> 控制台
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>foo<span class="token operator">/</span>bar<span class="token operator">/</span>baz<span class="token operator">/</span>bag<span class="token operator">/</span>File3<span class="token punctuation">.</span>txt
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>foo<span class="token operator">/</span>bar<span class="token operator">/</span>baz<span class="token operator">/</span>bag<span class="token operator">/</span><span class="token number">2767500121528410890</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>baz<span class="token operator">/</span>bag<span class="token operator">/</span>foo<span class="token operator">/</span>bar<span class="token operator">/</span>File1<span class="token punctuation">.</span>txt
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>baz<span class="token operator">/</span>bag<span class="token operator">/</span>foo<span class="token operator">/</span>bar<span class="token operator">/</span><span class="token number">5789074899285883862</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>dir<span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>bar<span class="token operator">/</span>baz<span class="token operator">/</span>bag<span class="token operator">/</span>foo<span class="token operator">/</span>File2<span class="token punctuation">.</span>txt
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>bar<span class="token operator">/</span>baz<span class="token operator">/</span>bag<span class="token operator">/</span>foo<span class="token operator">/</span><span class="token number">5458649986440731775</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>bag<span class="token operator">/</span>foo<span class="token operator">/</span>bar<span class="token operator">/</span>baz<span class="token operator">/</span>File0<span class="token punctuation">.</span>txt
+ <span class="token operator">*</span> io<span class="token operator">/</span>src<span class="token operator">/</span>main<span class="token operator">/</span>java<span class="token operator">/</span>com<span class="token operator">/</span>markus<span class="token operator">/</span>java<span class="token operator">/</span>file<span class="token operator">/</span>test<span class="token operator">/</span>bag<span class="token operator">/</span>foo<span class="token operator">/</span>bar<span class="token operator">/</span>baz<span class="token operator">/</span><span class="token number">5568292198534480479</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+ <span class="token operator">*</span> <span class="token number">2767500121528410890</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> <span class="token number">5789074899285883862</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> dir<span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> <span class="token number">5458649986440731775</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> <span class="token number">5568292198534480479</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+ <span class="token operator">*</span> <span class="token number">2767500121528410890</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> <span class="token number">5789074899285883862</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> <span class="token number">5458649986440731775</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span> <span class="token number">5568292198534480479</span><span class="token punctuation">.</span>tmp
+ <span class="token operator">*</span><span class="token operator">/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="三、组件二：File（文件）"><a href="#三、组件二：File（文件）" class="headerlink" title="三、组件二：File（文件）"></a>三、组件二：File（文件）</h2><p>在上面，主要学习记录了对路径目录的操作，现在来学习下如果操作文件本身的内容，也就是如何进行读写文件：</p>
+<ul>
+<li>通过Files.readAllLines 可以一次性的读入整个文件，生成一个List&lt;<string>&gt;。ps：这里不建议一次性读入大文件，会撑爆内存的</string></li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Files<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Paths<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/15 10:39 PM
+ * @Description:
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ListOfLines</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        Files<span class="token punctuation">.</span><span class="token function">readAllLines</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"io/src/main/resources/file_writer.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 控制台
+ * Hello,IO
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="四、全文总结"><a href="#四、全文总结" class="headerlink" title="四、全文总结"></a>四、全文总结</h2>
             </div>
             <hr />
 
@@ -1459,7 +1878,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/34.jpg" class="responsive-img" alt="每日复盘">
+                        <img src="/medias/featureimages/35.jpg" class="responsive-img" alt="每日复盘">
                         
                         <span class="card-title">每日复盘</span>
                     </div>
@@ -1493,7 +1912,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/30.jpg" class="responsive-img" alt="新I/O系统">
+                        <img src="/medias/featureimages/29.jpg" class="responsive-img" alt="新I/O系统">
                         
                         <span class="card-title">新I/O系统</span>
                     </div>
@@ -1685,7 +2104,7 @@
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">39.7k
+            <span class="white-color">41.8k
              丨            
           
 
@@ -1773,7 +2192,7 @@
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">39.7k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">41.8k</span>
     </div>
 </footer>
 
