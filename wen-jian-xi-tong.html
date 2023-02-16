@@ -522,7 +522,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -677,14 +677,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.8k
+                    4.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    20 分
+                    23 分
                 </div>
                 
                 
@@ -1382,7 +1382,7 @@
  <span class="token operator">*</span><span class="token operator">/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="三、组件二：File（文件）"><a href="#三、组件二：File（文件）" class="headerlink" title="三、组件二：File（文件）"></a>三、组件二：File（文件）</h2><p>在上面，主要学习记录了对路径目录的操作，现在来学习下如果操作文件本身的内容，也就是如何进行读写文件：</p>
 <ul>
-<li>通过Files.readAllLines 可以一次性的读入整个文件，生成一个List&lt;<string>&gt;。ps：这里不建议一次性读入大文件，会撑爆内存的</string></li>
+<li>通过Files.readAllLines 可以一次性的读入整个文件，生成一个List&lt;String&gt;。ps：这里不建议一次性读入大文件，会撑爆内存的</li>
 </ul>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
 
@@ -1406,7 +1406,115 @@
 <span class="token comment" spellcheck="true">/** 控制台
  * Hello,IO
  */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="四、全文总结"><a href="#四、全文总结" class="headerlink" title="四、全文总结"></a>四、全文总结</h2>
+<ul>
+<li>通过Files.write可以将byte数组或任何实现了Iterable接口的类的对象写入文件</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">.</span>constant<span class="token punctuation">.</span>FileConstant<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>charset<span class="token punctuation">.</span>Charset<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Files<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Paths<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Random<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/16 10:33 PM
+ * @Description:
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Writing</span> <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> Random rand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token number">47</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> SIZE <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 将字节写入一个文件</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">byte</span><span class="token punctuation">[</span>SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        rand<span class="token punctuation">.</span><span class="token function">nextBytes</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//        Files.write(Paths.get(FileConstant.CURRENT_BASE_PATH, "bytes.txt"), bytes, Charset.forName("charset"));</span>
+        Files<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"bytes.txt"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"bytes.txt: "</span> <span class="token operator">+</span> Files<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"bytes.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 将实现了Iterable接口的类的对象写入一个文件</span>
+        List<span class="token operator">&lt;</span>String<span class="token operator">></span> lines <span class="token operator">=</span> Files<span class="token punctuation">.</span><span class="token function">readAllLines</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"io/src/main/resources/file_writer.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Files<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"io/src/main/resources/file_writer.txt"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> lines<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"file_writer.txt: "</span> <span class="token operator">+</span> Files<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"io/src/main/resources/file_writer.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/**
+ * 控制台
+ * bytes.txt: 1000
+ * file_writer.txt: 9
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>通过Files.lines可以很方便的将一个文件变为一个由行组成的Stream，这样可以应对当文件非常大，而我们只需要文件的一部分时，进行读取，而非全部读入内存当中</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">.</span>constant<span class="token punctuation">.</span>FileConstant<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Files<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Paths<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/16 10:47 PM
+ * @Description:
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ReadLineStream</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        Files<span class="token punctuation">.</span><span class="token function">lines</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"PathInfo.java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">skip</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">findFirst</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">ifPresent</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 控制台
+ *  * @Author: zhangchenglong06
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>通过Files.lines我们也可以实现由行组成的输入流来在流中完成读取、处理、写入等操作</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>java<span class="token punctuation">.</span>file<span class="token punctuation">.</span>constant<span class="token punctuation">.</span>FileConstant<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>PrintWriter<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Files<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span>Paths<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span>Stream<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/16 10:52 PM
+ * @Description:
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StreamInAndOut</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">(</span>
+                Stream<span class="token operator">&lt;</span>String<span class="token operator">></span> input <span class="token operator">=</span> Files<span class="token punctuation">.</span><span class="token function">lines</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH<span class="token punctuation">,</span> <span class="token string">"StreamInAndOut.java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                PrintWriter writer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PrintWriter</span><span class="token punctuation">(</span>FileConstant<span class="token punctuation">.</span>CURRENT_BASE_PATH <span class="token operator">+</span> <span class="token string">"StreamInAndOut.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            input<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>String<span class="token operator">:</span><span class="token operator">:</span>toUpperCase<span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">forEachOrdered</span><span class="token punctuation">(</span>writer<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="四、全文总结"><a href="#四、全文总结" class="headerlink" title="四、全文总结"></a>四、全文总结</h2><p>本文记录了基于Path、Paths、File、Files等抽象对文件、目录相关的操作，摒弃了传统的Java I/O操作类，它使得我们对文件等的操作更加简单，它屏蔽了用户与底层的交互，也使得代码可以跨平台运行。</p>
+
             </div>
             <hr />
 
@@ -1878,7 +1986,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/35.jpg" class="responsive-img" alt="每日复盘">
+                        <img src="/medias/featureimages/36.jpg" class="responsive-img" alt="每日复盘">
                         
                         <span class="card-title">每日复盘</span>
                     </div>
@@ -1912,7 +2020,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/29.jpg" class="responsive-img" alt="新I/O系统">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="新I/O系统">
                         
                         <span class="card-title">新I/O系统</span>
                     </div>
@@ -2104,7 +2212,7 @@
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">41.8k
+            <span class="white-color">42.4k
              丨            
           
 
@@ -2192,7 +2300,7 @@
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">41.8k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">42.4k</span>
     </div>
 </footer>
 
