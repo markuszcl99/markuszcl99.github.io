@@ -4,6 +4,97 @@
   
     
     <entry>
+      <title>@Profile注解简介及其底层原理</title>
+      <link href="/profile-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html"/>
+      <url>/profile-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>@Conditional条件注解简介及其底层原理</title>
+      <link href="/conditional-tiao-jian-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html"/>
+      <url>/conditional-tiao-jian-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>容器装配注解简介及其底层原理</title>
+      <link href="/rong-qi-zhuang-pei-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html"/>
+      <url>/rong-qi-zhuang-pei-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>@Component及其派生类简介及其底层原理</title>
+      <link href="/component-ji-qi-pai-sheng-lei-jian-jie-ji-qi-di-ceng-yuan-li.html"/>
+      <url>/component-ji-qi-pai-sheng-lei-jian-jie-ji-qi-di-ceng-yuan-li.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>@Configuration注解简介及其底层原理</title>
+      <link href="/configuration-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html"/>
+      <url>/configuration-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>@EnableXXX模块驱动简介及其底层原理</title>
+      <link href="/enablexxx-mo-kuai-qu-dong-jian-jie-ji-qi-di-ceng-yuan-li.html"/>
+      <url>/enablexxx-mo-kuai-qu-dong-jian-jie-ji-qi-di-ceng-yuan-li.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Spring IoC容器之基于Java注解的容器配置</title>
+      <link href="/spring-ioc-rong-qi-zhi-ji-yu-java-zhu-jie-de-rong-qi-pei-zhi.html"/>
+      <url>/spring-ioc-rong-qi-zhi-ji-yu-java-zhu-jie-de-rong-qi-pei-zhi.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、全文概览"><a href="#一、全文概览" class="headerlink" title="一、全文概览"></a>一、全文概览</h2>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>每日复盘</title>
       <link href="/mei-ri-fu-pan.html"/>
       <url>/mei-ri-fu-pan.html</url>
@@ -280,7 +371,7 @@
       <link href="/spring-yuan-ma-shu-li-xi-lie-wen-zhang.html"/>
       <url>/spring-yuan-ma-shu-li-xi-lie-wen-zhang.html</url>
       
-        <content type="html"><![CDATA[<a id="more"></a><h1 id="一、系列篇"><a href="#一、系列篇" class="headerlink" title="一、系列篇"></a>一、系列篇</h1><ul><li><a href>【spring源码分析】SpringFramework简介</a></li><li>【spring源码分析】Spring IoC容器概览</li><li>【spring源码分析】Spring IoC容器生命周期(一)之refresh主流程</li><li>【spring源码分析】Spring IoC容器生命周期(二)之start流程</li><li>【spring源码分析】Spring IoC容器生命周期(三)之close流程</li><li>【spring源码分析】Spring IoC容器生命周期(二)之stop流程</li><li>【spring源码分析】Spring Bean概览(一)之Bean基础</li><li>【spring源码分析】Spring Bean概览(二)之Bean作用域</li><li>【spring源码分析】Spring Bean生命周期(一)之加载BeanDefinition</li><li>【spring源码分析】Spring Bean生命周期(二)之解析BeanDefinition</li><li>【spring源码分析】Spring Bean生命周期(三)之注册BeanDefinition</li><li>【spring源码分析】Spring Bean生命周期(四)之合并BeanDefinition</li><li>【spring源码分析】Spring Bean生命周期(五)之Bean实例创建</li><li>【spring源码分析】Spring Bean生命周期(六)之Bean属性填充</li><li>【spring源码分析】Spring Bean生命周期(七)之Bean功能拓展</li><li>【Spring源码分析】Spring Bean生命周期(八)之Bean循环依赖处理</li><li>【spring源码分析】Spring IoC容器之基于Java注解的容器配置</li><li>【spring源码分析】Spring IoC容器之泛型处理</li><li>【spring源码分析】Spring IoC容器之事件处理</li><li>【spring源码分析】Spring IoC容器之Environment抽象</li><li>【spring源码分析】Spring IoC容器之数据绑定</li><li>【spring源码分析】Spring IoC容器之数据校验</li><li>【spring源码分析】Spring IoC容器之SpEL表达式</li></ul><h1 id="二、随笔篇"><a href="#二、随笔篇" class="headerlink" title="二、随笔篇"></a>二、随笔篇</h1><ul><li><a href="/autowired-zhu-ru-yuan-li.html">@Autowired注入原理</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<a id="more"></a><h1 id="一、系列篇"><a href="#一、系列篇" class="headerlink" title="一、系列篇"></a>一、系列篇</h1><ul><li><a href>【spring源码分析】SpringFramework简介</a></li><li>【spring源码分析】Spring IoC容器概览</li><li>【spring源码分析】Spring IoC容器生命周期(一)之refresh主流程</li><li>【spring源码分析】Spring IoC容器生命周期(二)之start流程</li><li>【spring源码分析】Spring IoC容器生命周期(三)之close流程</li><li>【spring源码分析】Spring IoC容器生命周期(二)之stop流程</li><li>【spring源码分析】Spring Bean概览(一)之Bean基础</li><li>【spring源码分析】Spring Bean概览(二)之Bean作用域</li><li>【spring源码分析】Spring Bean生命周期(一)之加载BeanDefinition</li><li>【spring源码分析】Spring Bean生命周期(二)之解析BeanDefinition</li><li>【spring源码分析】Spring Bean生命周期(三)之注册BeanDefinition</li><li>【spring源码分析】Spring Bean生命周期(四)之合并BeanDefinition</li><li>【spring源码分析】Spring Bean生命周期(五)之Bean实例创建</li><li>【spring源码分析】Spring Bean生命周期(六)之Bean属性填充</li><li>【spring源码分析】Spring Bean生命周期(七)之Bean功能拓展</li><li>【Spring源码分析】Spring Bean生命周期(八)之Bean循环依赖处理</li><li><a href="/spring-ioc-rong-qi-zhi-ji-yu-java-zhu-jie-de-rong-qi-pei-zhi.html">【spring源码分析】Spring IoC容器之基于Java注解的容器配置</a></li><li>【spring源码分析】Spring IoC容器之泛型处理</li><li>【spring源码分析】Spring IoC容器之事件处理</li><li>【spring源码分析】Spring IoC容器之Environment抽象</li><li>【spring源码分析】Spring IoC容器之数据绑定</li><li>【spring源码分析】Spring IoC容器之数据校验</li><li>【spring源码分析】Spring IoC容器之SpEL表达式</li></ul><h1 id="二、随笔篇"><a href="#二、随笔篇" class="headerlink" title="二、随笔篇"></a>二、随笔篇</h1><ul><li><p><a href="/autowired-zhu-ru-yuan-li.html">@Autowired注入原理</a></p></li><li><p><a href="/enablexxx-mo-kuai-qu-dong-jian-jie-ji-qi-di-ceng-yuan-li.html">@EnableXXX模块驱动简介及其底层原理</a></p></li><li><p><a href="/configuration-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html">@Configuration注解简介及其底层原理</a></p></li><li><p><a href="/component-ji-qi-pai-sheng-lei-jian-jie-ji-qi-di-ceng-yuan-li.html">@Component及其派生类简介及其底层原理</a></p></li><li><p><a href="/rong-qi-zhuang-pei-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html">容器装配注解@ComponentScan、@Import、@ImportResource简介及其底层原理</a></p></li><li><p><a href="/conditional-tiao-jian-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html">@Conditional条件注解简介及其底层原理</a></p></li><li><p><a href="/profile-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html">@Profile注解简介及其底层原理</a></p></li></ul>]]></content>
       
       
       <categories>
