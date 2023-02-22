@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://101.43.146.21/"/>
-  <updated>2023-02-22T15:04:50.163Z</updated>
+  <updated>2023-02-22T15:12:04.057Z</updated>
   <id>https://101.43.146.21/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://101.43.146.21/bing-fa-bian-cheng-zhi-si-suo.html"/>
     <id>https://101.43.146.21/bing-fa-bian-cheng-zhi-si-suo.html</id>
     <published>2023-02-22T14:32:08.000Z</published>
-    <updated>2023-02-22T15:04:50.163Z</updated>
+    <updated>2023-02-22T15:12:04.057Z</updated>
     
     <summary type="html">
     
@@ -35,6 +35,12 @@
     
     </summary>
     
+      <category term="并发编程" scheme="https://101.43.146.21/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Java" scheme="https://101.43.146.21/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Java/"/>
+    
+    
+      <category term="死锁" scheme="https://101.43.146.21/tags/%E6%AD%BB%E9%94%81/"/>
     
   </entry>
   
