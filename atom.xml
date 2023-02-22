@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://101.43.146.21/"/>
-  <updated>2023-02-18T15:00:17.395Z</updated>
+  <updated>2023-02-22T15:04:50.163Z</updated>
   <id>https://101.43.146.21/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>并发编程之死锁</title>
+    <link href="https://101.43.146.21/bing-fa-bian-cheng-zhi-si-suo.html"/>
+    <id>https://101.43.146.21/bing-fa-bian-cheng-zhi-si-suo.html</id>
+    <published>2023-02-22T14:32:08.000Z</published>
+    <updated>2023-02-22T15:04:50.163Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、什么是死锁？&quot;&gt;&lt;a href=&quot;#一、什么是死锁？&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>@Profile注解简介及其底层原理</title>
@@ -49,7 +71,7 @@
     <link href="https://101.43.146.21/rong-qi-zhuang-pei-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html"/>
     <id>https://101.43.146.21/rong-qi-zhuang-pei-zhu-jie-jian-jie-ji-qi-di-ceng-yuan-li.html</id>
     <published>2023-02-18T14:59:40.000Z</published>
-    <updated>2023-02-18T14:59:40.153Z</updated>
+    <updated>2023-02-19T08:22:51.934Z</updated>
     
     <summary type="html">
     
@@ -313,7 +335,7 @@
     <link href="https://101.43.146.21/zhi-shi-ti-xi.html"/>
     <id>https://101.43.146.21/zhi-shi-ti-xi.html</id>
     <published>2023-02-04T09:03:00.000Z</published>
-    <updated>2023-02-05T05:14:10.485Z</updated>
+    <updated>2023-02-19T06:30:23.723Z</updated>
     
     <summary type="html">
     
@@ -418,34 +440,6 @@
       <category term="注解" scheme="https://101.43.146.21/tags/%E6%B3%A8%E8%A7%A3/"/>
     
       <category term="aop" scheme="https://101.43.146.21/tags/aop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring源码系列文章</title>
-    <link href="https://101.43.146.21/spring-yuan-ma-shu-li-xi-lie-wen-zhang.html"/>
-    <id>https://101.43.146.21/spring-yuan-ma-shu-li-xi-lie-wen-zhang.html</id>
-    <published>2023-02-04T08:39:21.000Z</published>
-    <updated>2023-02-18T15:02:35.259Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1 id=&quot;一、系列篇&quot;&gt;&lt;a href=&quot;#一、系列篇&quot; class=&quot;headerlink&quot; title=&quot;一、系列篇&quot;&gt;&lt;/a&gt;一、系列篇&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="spring" scheme="https://101.43.146.21/categories/spring/"/>
-    
-    
-      <category term="导航" scheme="https://101.43.146.21/tags/%E5%AF%BC%E8%88%AA/"/>
     
   </entry>
   
