@@ -8,13 +8,14 @@
     <meta name="baidu-site-verification" content="fmlEuI34ir">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="一、什么是死锁？
+    <meta name="description" content="一、本文概览
+死锁问题在并发编程中是一个非常致命的问题，问题一旦产生，只能通过重启机器、修改代码来修复问题，下面我们通过一小段文章内容介绍下死锁以及如何死锁的预防
+
+
+二、什么是死锁？
 在介绍死锁之前，先来明确下什么是锁？
 
-锁其实就是一种同步机制，一个线程拥有对一块资源的锁，那么该线程对这块资源的处理是与其他线程互斥的！在该线程未释放锁之前，其它线程会被限制对统一资源的访问。
-
-
-有了对锁概念的认知，我">
+锁其实就是一种">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -528,7 +529,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/42.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/38.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -687,14 +688,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    3.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    17 分
                 </div>
                 
                 
@@ -710,14 +711,18 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一、什么是死锁？"><a href="#一、什么是死锁？" class="headerlink" title="一、什么是死锁？"></a>一、什么是死锁？</h2><blockquote>
+                <h2 id="一、本文概览"><a href="#一、本文概览" class="headerlink" title="一、本文概览"></a>一、本文概览</h2><blockquote>
+<p>死锁问题在并发编程中是一个非常致命的问题，问题一旦产生，只能通过重启机器、修改代码来修复问题，下面我们通过一小段文章内容介绍下死锁以及如何死锁的预防</p>
+</blockquote>
+<p><img src="/bing-fa-bian-cheng-zhi-si-suo/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B9%8B%E6%AD%BB%E9%94%81.jpg" alt></p>
+<h2 id="二、什么是死锁？"><a href="#二、什么是死锁？" class="headerlink" title="二、什么是死锁？"></a>二、什么是死锁？</h2><blockquote>
 <p>在介绍死锁之前，先来明确下什么是锁？</p>
 <ul>
 <li>锁其实就是一种同步机制，一个线程拥有对一块资源的锁，那么该线程对这块资源的处理是与其他线程互斥的！在该线程未释放锁之前，其它线程会被限制对统一资源的访问。</li>
 </ul>
 </blockquote>
 <p>有了对锁概念的认知，我们再来看下死锁是什么？所谓死锁其实就是指在多线程或者多进程运行状态下，因争夺资源而导致的一种互不让步的僵局，导致各自均进入阻塞状态，如果没有外力（强制中断或者程序设置超时中断）的推动，则程序将一直处于僵持（崩溃）状态。</p>
-<h2 id="二、死锁产生的必要条件？"><a href="#二、死锁产生的必要条件？" class="headerlink" title="二、死锁产生的必要条件？"></a>二、死锁产生的必要条件？</h2><p>产生死锁有四个必要条件：</p>
+<h2 id="三、死锁产生的必要条件？"><a href="#三、死锁产生的必要条件？" class="headerlink" title="三、死锁产生的必要条件？"></a>三、死锁产生的必要条件？</h2><p>产生死锁有四个必要条件：</p>
 <ul>
 <li>资源互斥：资源互斥就是上面我们说的锁，线程持有的锁是需要具备独占且排他使用的</li>
 <li>不可被剥夺：线程在对持有的资源未使用完毕前，是不会被其他线程强行剥夺的</li>
@@ -828,12 +833,340 @@ Java stack information <span class="token keyword">for</span> the threads listed
     at java.lang.Thread.run<span class="token punctuation">(</span>Thread.java:748<span class="token punctuation">)</span>
 
 Found 1 deadlock.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="三、如何防范死锁？"><a href="#三、如何防范死锁？" class="headerlink" title="三、如何防范死锁？"></a>三、如何防范死锁？</h2><p>上面介绍了产生死锁的必要条件，所谓必要条件就是要都满足才能产生死锁，所以在预防的时候，我们可以任意打破死锁的4个必要条件来预防死锁，但又因为资源互斥是底层操作系统的固有特性，应用层面是无法改变的，所以我们可以通过破坏剩余的三个条件来进行预防：</p>
+<h2 id="四、如何防范死锁？"><a href="#四、如何防范死锁？" class="headerlink" title="四、如何防范死锁？"></a>四、如何防范死锁？</h2><p>上面介绍了产生死锁的必要条件，所谓必要条件就是要都满足才能产生死锁，所以在预防的时候，我们可以任意打破死锁的4个必要条件来预防死锁，但又因为资源互斥是底层操作系统的固有特性，应用层面是无法改变的，所以我们可以通过破坏剩余的三个条件来进行预防：</p>
 <ul>
 <li>破坏”不可被剥夺”条件</li>
 <li>破坏”请求并保持”条件</li>
 <li>破坏”循环等待”条件</li>
 </ul>
+<p>下面来举个经典的死锁案例：哲学家晚餐情景。</p>
+<p>一个餐桌上有五名哲学家以及五根筷子，这五根筷子分别插入到五位哲学家的间隔处，哲学家想要饮食则必须同时拿起左右手两边的筷子，所以现在就有问题了，如果有人能够吃饭，那肯定会有人等待，在某种情况下还极可能造成所有人都在等待以导致死锁的情况。</p>
+<p><img src="/bing-fa-bian-cheng-zhi-si-suo/%E5%93%B2%E5%AD%A6%E5%AE%B6%E6%99%9A%E9%A4%90.jpg" alt></p>
+<p>我们来用代码实现一下这种场景：</p>
+<ul>
+<li>筷子持有</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>onjava<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>deadlock<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>ArrayBlockingQueue<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>BlockingQueue<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/25 10:12 PM
+ * @Description: 筷子持有者
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StickHolder</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Chopstick</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> Chopstick stick <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Chopstick</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 利用阻塞队列实现当前筷子同一时刻只能被一个人持有，其他人想要获取这跟筷子，则必须等待</span>
+    <span class="token keyword">private</span> BlockingQueue<span class="token operator">&lt;</span>Chopstick<span class="token operator">></span> holder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayBlockingQueue</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">StickHolder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">putDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 拿起筷子
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">pickUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            holder<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 不可用时会阻塞</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 放下筷子
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">putDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            holder<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>stick<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>哲学家</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>onjava<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>deadlock<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>TimeUnit<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/25 10:19 PM
+ * @Description: 哲学家
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Philosopher</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> seat<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> StickHolder left<span class="token punctuation">,</span> right<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">Philosopher</span><span class="token punctuation">(</span><span class="token keyword">int</span> seat<span class="token punctuation">,</span> StickHolder left<span class="token punctuation">,</span> StickHolder right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>seat <span class="token operator">=</span> seat<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> left<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> right<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"P"</span> <span class="token operator">+</span> seat<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment" spellcheck="true">// 循环执行吃饭的动作</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 拿起右手边的筷子</span>
+            right<span class="token punctuation">.</span><span class="token function">pickUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 拿起左手边的筷子</span>
+            left<span class="token punctuation">.</span><span class="token function">pickUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token operator">+</span> <span class="token string">" eating"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 放下右手边的筷子</span>
+            right<span class="token punctuation">.</span><span class="token function">putDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 放下左手边的筷子</span>
+            left<span class="token punctuation">.</span><span class="token function">putDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>晚餐现场</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>onjava<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>deadlock<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>onjava<span class="token punctuation">.</span>Nap<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>CompletableFuture<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/25 10:23 PM
+ * @Description: 哲学家的晚餐演示
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DiningPhilosophers</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/*筷子持有者*/</span>
+    <span class="token keyword">private</span> StickHolder<span class="token punctuation">[</span><span class="token punctuation">]</span> sticks<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/*哲学家*/</span>
+    <span class="token keyword">private</span> Philosopher<span class="token punctuation">[</span><span class="token punctuation">]</span> philosophers<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">DiningPhilosophers</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        sticks <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StickHolder</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">setAll</span><span class="token punctuation">(</span>sticks<span class="token punctuation">,</span> i <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">StickHolder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        philosophers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+          <span class="token comment" spellcheck="true">// 通过模数n选择右手边的筷子，并将最后一个哲学家指向第一位哲学家旁边，整体形成一个环</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">setAll</span><span class="token punctuation">(</span>philosophers<span class="token punctuation">,</span> i <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> sticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> sticks<span class="token punctuation">[</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> n<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>philosophers<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>CompletableFuture<span class="token operator">:</span><span class="token operator">:</span>runAsync<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment" spellcheck="true">// 立刻返回，不阻塞</span>
+        <span class="token keyword">new</span> <span class="token class-name">DiningPhilosophers</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment" spellcheck="true">// 主流程等待100s后再退出（此时我们可以观察哲学家的用餐场景）</span>
+        <span class="token keyword">new</span> <span class="token class-name">Nap</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token string">"Shutdown"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>执行晚餐现场的代码后，我们可以发现，起初还能正常的执行，但一会就会形成互相等待的场景，这种等待形成了一个环，也就造成了死锁。</p>
+<p><img src="/bing-fa-bian-cheng-zhi-si-suo/%E5%93%B2%E5%AD%A6%E5%AE%B6%E6%AD%BB%E9%94%81.jpg" alt></p>
+<p>我们也可以通过jstack命令来确认下互相等待的情况：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">➜  ~ jps
+1593
+10331 Jps
+10318 Launcher
+8862 JStack
+10319 DiningPhilosophers
+➜  ~ jstack 10319
+2023-02-26 14:51:08
+Full thread dump Java HotSpot<span class="token punctuation">(</span>TM<span class="token punctuation">)</span> 64-Bit Server VM <span class="token punctuation">(</span>25.211-b12 mixed mode<span class="token punctuation">)</span>:
+
+<span class="token string">"ForkJoinPool.commonPool-worker-5"</span> <span class="token comment" spellcheck="true">#17 daemon prio=5 os_prio=31 tid=0x00007fb25188f800 nid=0x6a07 waiting on condition [0x000000030668e000]</span>
+   java.lang.Thread.State: WAITING <span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+    at sun.misc.Unsafe.park<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+    - parking to <span class="token function">wait</span> <span class="token keyword">for</span>  <span class="token operator">&lt;</span>0x000000076b249450<span class="token operator">></span> <span class="token punctuation">(</span>a java.util.concurrent.ForkJoinPool<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.awaitWork<span class="token punctuation">(</span>ForkJoinPool.java:1824<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.runWorker<span class="token punctuation">(</span>ForkJoinPool.java:1693<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinWorkerThread.run<span class="token punctuation">(</span>ForkJoinWorkerThread.java:157<span class="token punctuation">)</span>
+
+<span class="token string">"ForkJoinPool.commonPool-worker-7"</span> <span class="token comment" spellcheck="true">#19 daemon prio=5 os_prio=31 tid=0x00007fb211809000 nid=0x9503 waiting on condition [0x000000030658b000]</span>
+   java.lang.Thread.State: WAITING <span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+    at sun.misc.Unsafe.park<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+    - parking to <span class="token function">wait</span> <span class="token keyword">for</span>  <span class="token operator">&lt;</span>0x000000076b249450<span class="token operator">></span> <span class="token punctuation">(</span>a java.util.concurrent.ForkJoinPool<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.awaitWork<span class="token punctuation">(</span>ForkJoinPool.java:1824<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.runWorker<span class="token punctuation">(</span>ForkJoinPool.java:1693<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinWorkerThread.run<span class="token punctuation">(</span>ForkJoinWorkerThread.java:157<span class="token punctuation">)</span>
+
+<span class="token string">"ForkJoinPool.commonPool-worker-6"</span> <span class="token comment" spellcheck="true">#18 daemon prio=5 os_prio=31 tid=0x00007fb211808800 nid=0x6703 waiting on condition [0x0000000306488000]</span>
+   java.lang.Thread.State: WAITING <span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+    at sun.misc.Unsafe.park<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+    - parking to <span class="token function">wait</span> <span class="token keyword">for</span>  <span class="token operator">&lt;</span>0x000000076b18a040<span class="token operator">></span> <span class="token punctuation">(</span>a java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span><span class="token punctuation">)</span>
+    at java.util.concurrent.locks.LockSupport.park<span class="token punctuation">(</span>LockSupport.java:175<span class="token punctuation">)</span>
+    at java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span>.await<span class="token punctuation">(</span>AbstractQueuedSynchronizer.java:2039<span class="token punctuation">)</span>
+    at java.util.concurrent.ArrayBlockingQueue.take<span class="token punctuation">(</span>ArrayBlockingQueue.java:403<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.StickHolder.pickUp<span class="token punctuation">(</span>StickHolder.java:30<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.Philosopher.run<span class="token punctuation">(</span>Philosopher.java:31<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run$$<span class="token variable">$capture</span><span class="token punctuation">(</span>CompletableFuture.java:1626<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run<span class="token punctuation">(</span>CompletableFuture.java<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.exec<span class="token punctuation">(</span>CompletableFuture.java:1618<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec$$<span class="token variable">$capture</span><span class="token punctuation">(</span>ForkJoinTask.java:289<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec<span class="token punctuation">(</span>ForkJoinTask.java<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool<span class="token variable">$WorkQueue</span>.runTask<span class="token punctuation">(</span>ForkJoinPool.java:1056<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.runWorker<span class="token punctuation">(</span>ForkJoinPool.java:1692<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinWorkerThread.run<span class="token punctuation">(</span>ForkJoinWorkerThread.java:157<span class="token punctuation">)</span>
+
+<span class="token string">"ForkJoinPool.commonPool-worker-4"</span> <span class="token comment" spellcheck="true">#16 daemon prio=5 os_prio=31 tid=0x00007fb2540cd000 nid=0x9703 waiting on condition [0x0000000306385000]</span>
+   java.lang.Thread.State: WAITING <span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+    at sun.misc.Unsafe.park<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+    - parking to <span class="token function">wait</span> <span class="token keyword">for</span>  <span class="token operator">&lt;</span>0x000000076b189f70<span class="token operator">></span> <span class="token punctuation">(</span>a java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span><span class="token punctuation">)</span>
+    at java.util.concurrent.locks.LockSupport.park<span class="token punctuation">(</span>LockSupport.java:175<span class="token punctuation">)</span>
+    at java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span>.await<span class="token punctuation">(</span>AbstractQueuedSynchronizer.java:2039<span class="token punctuation">)</span>
+    at java.util.concurrent.ArrayBlockingQueue.take<span class="token punctuation">(</span>ArrayBlockingQueue.java:403<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.StickHolder.pickUp<span class="token punctuation">(</span>StickHolder.java:30<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.Philosopher.run<span class="token punctuation">(</span>Philosopher.java:31<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run$$<span class="token variable">$capture</span><span class="token punctuation">(</span>CompletableFuture.java:1626<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run<span class="token punctuation">(</span>CompletableFuture.java<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.exec<span class="token punctuation">(</span>CompletableFuture.java:1618<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec$$<span class="token variable">$capture</span><span class="token punctuation">(</span>ForkJoinTask.java:289<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec<span class="token punctuation">(</span>ForkJoinTask.java<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool<span class="token variable">$WorkQueue</span>.runTask<span class="token punctuation">(</span>ForkJoinPool.java:1056<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.runWorker<span class="token punctuation">(</span>ForkJoinPool.java:1692<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinWorkerThread.run<span class="token punctuation">(</span>ForkJoinWorkerThread.java:157<span class="token punctuation">)</span>
+
+<span class="token string">"ForkJoinPool.commonPool-worker-3"</span> <span class="token comment" spellcheck="true">#15 daemon prio=5 os_prio=31 tid=0x00007fb253849000 nid=0x9903 waiting on condition [0x0000000306282000]</span>
+   java.lang.Thread.State: WAITING <span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+    at sun.misc.Unsafe.park<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+    - parking to <span class="token function">wait</span> <span class="token keyword">for</span>  <span class="token operator">&lt;</span>0x000000076b189ea0<span class="token operator">></span> <span class="token punctuation">(</span>a java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span><span class="token punctuation">)</span>
+    at java.util.concurrent.locks.LockSupport.park<span class="token punctuation">(</span>LockSupport.java:175<span class="token punctuation">)</span>
+    at java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span>.await<span class="token punctuation">(</span>AbstractQueuedSynchronizer.java:2039<span class="token punctuation">)</span>
+    at java.util.concurrent.ArrayBlockingQueue.take<span class="token punctuation">(</span>ArrayBlockingQueue.java:403<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.StickHolder.pickUp<span class="token punctuation">(</span>StickHolder.java:30<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.Philosopher.run<span class="token punctuation">(</span>Philosopher.java:31<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run$$<span class="token variable">$capture</span><span class="token punctuation">(</span>CompletableFuture.java:1626<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run<span class="token punctuation">(</span>CompletableFuture.java<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.exec<span class="token punctuation">(</span>CompletableFuture.java:1618<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec$$<span class="token variable">$capture</span><span class="token punctuation">(</span>ForkJoinTask.java:289<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec<span class="token punctuation">(</span>ForkJoinTask.java<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool<span class="token variable">$WorkQueue</span>.runTask<span class="token punctuation">(</span>ForkJoinPool.java:1056<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.runWorker<span class="token punctuation">(</span>ForkJoinPool.java:1692<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinWorkerThread.run<span class="token punctuation">(</span>ForkJoinWorkerThread.java:157<span class="token punctuation">)</span>
+
+<span class="token string">"ForkJoinPool.commonPool-worker-2"</span> <span class="token comment" spellcheck="true">#14 daemon prio=5 os_prio=31 tid=0x00007fb252030800 nid=0x6303 waiting on condition [0x000000030617f000]</span>
+   java.lang.Thread.State: WAITING <span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+    at sun.misc.Unsafe.park<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+    - parking to <span class="token function">wait</span> <span class="token keyword">for</span>  <span class="token operator">&lt;</span>0x000000076b189dd0<span class="token operator">></span> <span class="token punctuation">(</span>a java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span><span class="token punctuation">)</span>
+    at java.util.concurrent.locks.LockSupport.park<span class="token punctuation">(</span>LockSupport.java:175<span class="token punctuation">)</span>
+    at java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span>.await<span class="token punctuation">(</span>AbstractQueuedSynchronizer.java:2039<span class="token punctuation">)</span>
+    at java.util.concurrent.ArrayBlockingQueue.take<span class="token punctuation">(</span>ArrayBlockingQueue.java:403<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.StickHolder.pickUp<span class="token punctuation">(</span>StickHolder.java:30<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.Philosopher.run<span class="token punctuation">(</span>Philosopher.java:31<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run$$<span class="token variable">$capture</span><span class="token punctuation">(</span>CompletableFuture.java:1626<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run<span class="token punctuation">(</span>CompletableFuture.java<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.exec<span class="token punctuation">(</span>CompletableFuture.java:1618<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec$$<span class="token variable">$capture</span><span class="token punctuation">(</span>ForkJoinTask.java:289<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec<span class="token punctuation">(</span>ForkJoinTask.java<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool<span class="token variable">$WorkQueue</span>.runTask<span class="token punctuation">(</span>ForkJoinPool.java:1056<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.runWorker<span class="token punctuation">(</span>ForkJoinPool.java:1692<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinWorkerThread.run<span class="token punctuation">(</span>ForkJoinWorkerThread.java:157<span class="token punctuation">)</span>
+
+<span class="token string">"ForkJoinPool.commonPool-worker-1"</span> <span class="token comment" spellcheck="true">#13 daemon prio=5 os_prio=31 tid=0x00007fb25383a000 nid=0x6133 waiting on condition [0x000000030607c000]</span>
+   java.lang.Thread.State: WAITING <span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+    at sun.misc.Unsafe.park<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+    - parking to <span class="token function">wait</span> <span class="token keyword">for</span>  <span class="token operator">&lt;</span>0x000000076b189d00<span class="token operator">></span> <span class="token punctuation">(</span>a java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span><span class="token punctuation">)</span>
+    at java.util.concurrent.locks.LockSupport.park<span class="token punctuation">(</span>LockSupport.java:175<span class="token punctuation">)</span>
+    at java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span>.await<span class="token punctuation">(</span>AbstractQueuedSynchronizer.java:2039<span class="token punctuation">)</span>
+    at java.util.concurrent.ArrayBlockingQueue.take<span class="token punctuation">(</span>ArrayBlockingQueue.java:403<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.StickHolder.pickUp<span class="token punctuation">(</span>StickHolder.java:30<span class="token punctuation">)</span>
+    at com.markus.onjava.concurrent.deadlock.Philosopher.run<span class="token punctuation">(</span>Philosopher.java:31<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run$$<span class="token variable">$capture</span><span class="token punctuation">(</span>CompletableFuture.java:1626<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.run<span class="token punctuation">(</span>CompletableFuture.java<span class="token punctuation">)</span>
+    at java.util.concurrent.CompletableFuture<span class="token variable">$AsyncRun</span>.exec<span class="token punctuation">(</span>CompletableFuture.java:1618<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec$$<span class="token variable">$capture</span><span class="token punctuation">(</span>ForkJoinTask.java:289<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinTask.doExec<span class="token punctuation">(</span>ForkJoinTask.java<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool<span class="token variable">$WorkQueue</span>.runTask<span class="token punctuation">(</span>ForkJoinPool.java:1056<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinPool.runWorker<span class="token punctuation">(</span>ForkJoinPool.java:1692<span class="token punctuation">)</span>
+    at java.util.concurrent.ForkJoinWorkerThread.run<span class="token punctuation">(</span>ForkJoinWorkerThread.java:157<span class="token punctuation">)</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>通过对上面基础知识的学习，我们可以知道代码产生死锁的原因有以下几点：</p>
+<ul>
+<li>一根筷子（资源）同一时刻只能被一位哲学家使用，也就是资源互斥</li>
+<li>哲学家每人都持有一根筷子，并且均尝试去获取另一根筷子，就是请求并保持</li>
+<li>哲学家持有的筷子不能被强制回收，只能由自己完成任务主动释放，也就是不可被剥夺</li>
+<li>哲学家的等待形成了一个环，造成循环等待</li>
+</ul>
+<p>前面我们说了资源互斥是系统特性，我们先忽略打破这个条件，下面我们来通过其他三个条件来实现预防死锁的解决方案：</p>
+<ul>
+<li>打破循环等待-我们可以看到，哲学家都是尝试先拿起右边的筷子再拿起右边的筷子，这样就互相之间就形成了环，我们可以指定某一位哲学家不按照这样的顺序取筷子，则形成不了环，也就不会造成情况了。</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>onjava<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>deadlock<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>markus<span class="token punctuation">.</span>onjava<span class="token punctuation">.</span>Nap<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>CompletableFuture<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author: markus
+ * @date: 2023/2/25 10:23 PM
+ * @Description: 哲学家的晚餐演示
+ * @Blog: https://markuszhang.com
+ * It's my honor to share what I've learned with you!
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DiningPhilosophers</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/*筷子持有者*/</span>
+    <span class="token keyword">private</span> StickHolder<span class="token punctuation">[</span><span class="token punctuation">]</span> sticks<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/*哲学家*/</span>
+    <span class="token keyword">private</span> Philosopher<span class="token punctuation">[</span><span class="token punctuation">]</span> philosophers<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">DiningPhilosophers</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        sticks <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StickHolder</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">setAll</span><span class="token punctuation">(</span>sticks<span class="token punctuation">,</span> i <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">StickHolder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        philosophers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">setAll</span><span class="token punctuation">(</span>philosophers<span class="token punctuation">,</span> i <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> sticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> sticks<span class="token punctuation">[</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> n<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        philosophers<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> sticks<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> sticks<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// [1] 通过将第2位哲学家颠倒拿放筷子的顺序来修正死锁</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>philosophers<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>CompletableFuture<span class="token operator">:</span><span class="token operator">:</span>runAsync<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">new</span> <span class="token class-name">DiningPhilosophers</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">new</span> <span class="token class-name">Nap</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token string">"Shutdown"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>打破循环条件还有另一种方案，就是调大资源数超出你的机器的CPU物理核数，这样就导致同一时刻，肯定会有一位哲学家不参与活动的进行，这也就形成不了循环等待的情况</li>
+<li>我们还可以通过打破请求并保持的条件</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * 拿起筷子
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">pickUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+<span class="token comment" spellcheck="true">//      holder.take(); // 不可用时会阻塞</span>
+        holder<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 超时自己中断，不再尝试去获取锁</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token comment" spellcheck="true">//      throw new RuntimeException(e);</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>不可被剥夺条件实现起来比较麻烦，核心思想就是如果拿不到就去旁边手中抢过来。</li>
+</ul>
+<p>综上，预防死锁的方式可以通过打破那四个必要条件的其中一个即可，其中打破循环等待条件又是最容易的，我们通常会通过这种思路进行预防。</p>
+<h2 id="五、本文总结"><a href="#五、本文总结" class="headerlink" title="五、本文总结"></a>五、本文总结</h2><p>上述就是对死锁的简单介绍，包括死锁是什么，什么情况下会导致死锁（四个必要条件）以及如何预防死锁（打破四个必要条件之一即可），我们也可以看出在Java语言层面上是无法支持我们来避免死锁的，所以我们只能通过谨慎的设计来避免这个问题。避免并发问题，最简单有效的方法就是<strong>永远不要共享资源</strong>，但这看来也是不显式的，所以在设计的时候，我们也可以通过画布画出资源的依赖关系来谨慎设计方案等等其他方法来避免系统出现死锁。</p>
 
             </div>
             <hr />
@@ -1306,7 +1639,7 @@ Found 1 deadlock.<span aria-hidden="true" class="line-numbers-rows"><span></span
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/42.jpg" class="responsive-img" alt="并发编程之并发工具类">
+                        <img src="/medias/featureimages/38.jpg" class="responsive-img" alt="并发编程之并发工具类">
                         
                         <span class="card-title">并发编程之并发工具类</span>
                     </div>
@@ -1355,7 +1688,7 @@ Found 1 deadlock.<span aria-hidden="true" class="line-numbers-rows"><span></span
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/44.jpg" class="responsive-img" alt="@Profile注解简介及其底层原理">
+                        <img src="/medias/featureimages/48.jpg" class="responsive-img" alt="@Profile注解简介及其底层原理">
                         
                         <span class="card-title">@Profile注解简介及其底层原理</span>
                     </div>
@@ -1547,7 +1880,7 @@ Found 1 deadlock.<span aria-hidden="true" class="line-numbers-rows"><span></span
            <!--<a href="/sitemap.xml" target="_blank">站点地图</a>丨-->
            
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">45.3k
+            <span class="white-color">48k
              丨            
           
 
@@ -1635,7 +1968,7 @@ Found 1 deadlock.<span aria-hidden="true" class="line-numbers-rows"><span></span
       <span class="badge-subject">PV</span><span class="badge-value bg-brightgreen" id="busuanzi_value_site_pv"></span>
     </div> -->
     <div class="github-badge">
-      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">45.3k</span>
+      <span class="badge-subject">WordCount</span><span class="badge-value bg-blueviolet">48k</span>
     </div>
 </footer>
 
